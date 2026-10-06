@@ -317,9 +317,13 @@ body{overflow-x:clip}
 .vst4{display:inline-block;padding:2px 10px;border-radius:999px;background:color-mix(in srgb,var(--p) 18%,var(--in));font-size:.74rem;font-weight:800}
 .vtw{padding:10px 12px;border-radius:14px;background:var(--in);border:1.5px solid var(--bd);font-weight:700;line-height:1.55}
 /* ===== v20: cloud sync ===== */
-#syn{position:fixed;inset:0;z-index:10055;display:grid;place-items:center;padding:12px;background:rgba(20,8,16,.66);backdrop-filter:blur(6px);overflow:auto}
-#syn[hidden]{display:none}
+#syn,#lwm,#lwp{position:fixed;inset:0;z-index:10055;display:grid;place-items:center;padding:12px;background:rgba(20,8,16,.66);backdrop-filter:blur(8px);overflow-y:auto}
+#syn[hidden],#lwm[hidden],#lwp[hidden]{display:none}
 .syw{width:min(520px,100%);max-height:calc(100dvh - 24px);overflow:auto;display:flex;flex-direction:column;gap:10px}
+.lw-dialog{width:min(580px,100%);max-height:min(92vh,760px);display:flex;flex-direction:column;border-radius:22px;background:var(--card);border:2px solid var(--bd);box-shadow:var(--gl);overflow:hidden;padding:0}
+.lw-head{padding:14px 18px;border-bottom:1.5px solid var(--bd);display:flex;align-items:center;justify-content:space-between;background:var(--sec)}
+.lw-body{padding:16px 18px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:10px}
+.lw-foot{padding:12px 18px;border-top:1.5px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;align-items:center;background:var(--sec);position:sticky;bottom:0;z-index:2}
 .syw ol{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px;font-weight:700;line-height:1.5}
 .syw .note{font-size:.8rem;color:var(--mu);font-weight:700;line-height:1.5}
 .syw .stt{display:flex;align-items:center;gap:10px;background:var(--in);border:2px solid var(--bd);border-radius:14px;padding:10px 12px;font-weight:800}
@@ -992,8 +996,86 @@ const MQ='<svg viewBox="0 0 200 92" style="width:100%;max-height:90px" aria-hidd
 let tab='h',tpi=Math.floor(Math.random()*8);
 const card=document.createElement('div');card.className='card';card.id='gmg';($('stc')||$('mjc')).after(card);
 const RT=(h=>{})||0;
-function R(){card.innerHTML=`<h2><span>🌙 ${v('ti')}</span></h2>${MQ}<div class="row" style="margin:8px 0 10px">`+[['h','📜'],['q','📖'],['r','🕌'],['t','📿'],['p','🌸']].map(x=>`<button class="pill ${tab==x[0]?'on':''}" data-gt="${x[0]}">${x[1]} ${v(x[0])}</button>`).join('')+'</div><div id="gtb"></div>';
- card.querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{tab=b.dataset.gt;R();sfx('tap')});({h:HH,q:QQ,p:PP,r:RR,t:TT})[tab]($('gtb'))}
+/* ===== AUTHENTIC SUNNAH ADHKAR ===== */
+const AZD={"s": [{"id": "s1", "c": 1, "t": ["Ayat al-Kursi", "Âyetü'l-Kürsî", "آية الكرسي", "Ayat al-Kursi"], "ar": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ", "b": ["Recite 1x: Protected from evil & shaytan until evening.", "1 defa: Akşama kadar her türlü kötülükten ve şeytandan korunur.", "من قرأها حين يُصبح أُجير من الشيطان حتى يُمسي.", "Réciter 1x : Protégé contre tout mal jusqu'au soir."]}, {"id": "s2", "c": 3, "t": ["Al-Mu'awwidhat (3x)", "İhlâs, Felak ve Nâs Sureleri (3x)", "المعوذات والإخلاص (٣ مرات)", "Al-Ikhlas, Al-Falaq, An-Nas (3x)"], "ar": "﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴾\n\n﴿ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴾\n\n﴿ قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ ﴾", "b": ["Recite 3x: Suffices you against everything.", "3 defa: Her şeye karşı sana yeter.", "تكفيك من كل شيء (٣ مرات).", "Répéter 3x : Suffit amplement contre toute chose."]}, {"id": "s3", "c": 1, "t": ["Morning Praise & Surrender", "Sabah Hamd ve Teslimiyet", "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ", "Louange matinale et soumission"], "ar": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذَا الْيَوْمِ وَخَيْرَ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذَا الْيَوْمِ وَشَرِّ مَا بَعْدَهُ، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.", "b": ["Seeking the day's blessings and safety from laziness & torment.", "Günün hayrını istemek, tembellik ve azaptan sığınmak.", "سؤال خير اليوم ونوره وبركته والتعوذ من الشر والكسل.", "Demander le bien et la lumière du jour, protection contre l'enfer."]}, {"id": "s4", "c": 1, "t": ["By Your Grace We Enter Morning", "Seninle Sabaha Çıktık", "اللَّهُمَّ بِكَ أَصْبَحْنَا", "Par Ta grâce nous atteignons le matin"], "ar": "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ.", "b": ["Affirmation of life, death and resurrection to Allah.", "Hayatımızın, ölümümüzün ve dirilişimizin Allah'a olduğunu ikrar.", "الاعتراف بنعمة الحياة وتفويض الأمر كله لله وإليه النشور.", "Affirmation de confiance et remise de notre sort à Allah."]}, {"id": "s5", "c": 1, "t": ["Sayyid al-Istighfar (Master of Forgiveness)", "Seyyidü'l-İstiğfar (İstiğfarın Efendisi)", "سَيِّدُ الِاسْتِغْفَارِ", "Le Maître de la demande de pardon"], "ar": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.", "b": ["Whoever recites it with certainty and passes that day enters Paradise.", "İnanarak söyleyip o gün vefat eden kimse cennet ehlindendir.", "من قالها موقناً بها ومات في يومه قبل أن يمسي دخل الجنة.", "Celui qui la récite avec conviction et meurt ce jour entre au Paradis."]}, {"id": "s6", "c": 3, "t": ["Supplication for Wellness (3x)", "Beden ve Ruh Sağlığı Duası (3x)", "اللَّهُمَّ عَافِنِي فِي بَدَنِي (٣ مرات)", "Invocation pour la santé et le bien-être (3x)"], "ar": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ.", "b": ["Recite 3x: Health in body, hearing, sight, and protection from poverty.", "3 defa: Beden, kulak ve göz için şifa; fakirlik ve kabir azabından korunma.", "دعاء العافية التامة في البدن والسمع والبصر والاستعاذة من الفقر (٣ مرات).", "3x : Santé du corps, de l'ouïe, de la vue et protection contre la pauvreté."]}, {"id": "s7", "c": 1, "t": ["Comprehensive Shield of Well-being", "Kapsamlı Afiyet ve Korunma Duası", "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ", "Protection totale dans toutes les directions"], "ar": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.", "b": ["Divine protection from all six directions: front, back, right, left, above, below.", "Önden, arkadan, sağdan, soldan, üstten ve alttan tam ilahi koruma.", "حفظ شامل من الجهات الست وستر العورات وأمن الروعات في الدين والدنيا.", "Protection divine complète des six directions pour soi, foi et famille."]}, {"id": "s8", "c": 3, "t": ["In the Name of Allah with Whose Name Nothing Harms (3x)", "İsmiyle Hiçbir Şeyin Zarar Veremeyeceği Allah'ın Adıyla (3x)", "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ (٣ مرات)", "Au Nom d'Allah dont le Nom protège de tout (3x)"], "ar": "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.", "b": ["Recite 3x: Absolute immunity from all sudden harm and afflictions.", "3 defa: Hiçbir şey zarar veremez, ani belalardan korunur.", "لم يضره شيء من فجأة بلاء ولا سم ولا سحر حتى يمسي (٣ مرات).", "3x : Bouclier impénétrable contre tout mal ou fléau soudain."]}, {"id": "s9", "c": 3, "t": ["Pleasure with Allah, Islam & the Prophet ﷺ (3x)", "Allah'tan, İslam'dan ve Peygamberimiz'den Razı Olmak (3x)", "رَضِيتُ بِاللَّهِ رَبًّا (٣ مرات)", "Agrément d'Allah, de l'Islam et du Prophète ﷺ (3x)"], "ar": "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا.", "b": ["Recite 3x: Allah has bound upon Himself to make them pleased on Judgment Day.", "3 defa: Kıyamet gününde Allah'ın kulunu razı edeceği müjdesi.", "كان حقاً على الله أن يرضيه يوم القيامة ويدخله جنته (٣ مرات).", "3x : Allah Se fait un devoir de combler de satisfaction au Jour Dernier."]}, {"id": "s10", "c": 1, "t": ["O Ever-Living, Sustainer of All", "Ey Hayy ve Kayyûm Olan Allah'ım", "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ", "Ô Vivant, Ô Subsistant par Soi-même"], "ar": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.", "b": ["Entrusting all affairs to Allah's care without relying on oneself for a blink.", "Bütün işlerin ıslahı ve nefse bir göz açıp kapayıncaya kadar bile bırakılmama duası.", "إصلاح الشأن كله وطلب الرحمة والعون وعدم الوكول للنفس أبداً.", "Remettre toutes ses affaires à la grâce divine sans s'en remettre à l'ego."]}, {"id": "s11", "c": 1, "t": ["Morning upon the Fitrah of Islam", "İslam Fıtratı Üzere Sabaha Çıkmak", "أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ", "Au matin sur la saine nature de l'Islam"], "ar": "أَصْبَحْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ.", "b": ["Renewing pure monotheism upon the footsteps of Prophet Ibrahim (as).", "Hz. İbrahim'in tertemiz tevhid inancı ve İslam fıtratı üzerine sabahlamak.", "الثبات على التوحيد الخالص وفطرة الإسلام وسنة النبي ﷺ وملة إبراهيم.", "Renouveler la foi pure sur la voie d'Abraham et la Sunnah du Prophète ﷺ."]}, {"id": "s12", "c": 3, "t": ["Glorification Equal to All Creation (3x)", "Tüm Yaratılanlar Sayısınca Tesbih (3x)", "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ عَدَدَ خَلْقِهِ (٣ مرات)", "Glorification égale au nombre de créatures (3x)"], "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.", "b": ["Recite 3x: Outweighs hours of continuous remembrance in reward.", "3 defa: Saatlerce süren zikir ve tesbihin sevabından daha faziletli ve ağır.", "تزن عبادة ساعات طويلة في الميزان والثواب المضاعف عند الله (٣ مرات).", "3x : Pèse plus lourd dans la balance que des heures entières de dévotion."]}, {"id": "s13", "c": 100, "t": ["Glory & Praise to Allah (100x)", "Subhanallahi ve Bihamdih (100x)", "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ (١٠٠ مرة)", "Gloire et Louange à Allah (100x)"], "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", "b": ["Recite 100x: Sins are erased even if as plentiful as foam on the sea.", "100 defa: Günahlar deniz köpüğü kadar çok olsa bile bağışlanır.", "حُطّت خطاياه وإن كانت مثل زبد البحر ولم يأتِ أحد بأفضل مما جاء به (١٠٠ مرة).", "100x : Les péchés sont effacés même abondants comme l'écume des mers."]}, {"id": "s14", "c": 10, "t": ["The Supreme Declaration of Tawhid (10x)", "Yüce Tevhid Zikri (10x)", "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ (١٠ مرات)", "La suprême attestation d'unicité (10x)"], "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", "b": ["Recite 10x: Equal to freeing 4 slaves from descendants of Ismail.", "10 defa: İsmail aleyhisselam soyundan 4 köle azat etmiş gibi sevap.", "عِدل عتق أربع رقاب وحط للسيئات ورفعة في الدرجات (١٠ مرات).", "10x : Équivaut à affranchir 4 esclaves de la descendance d'Ismaël."]}, {"id": "s15", "c": 10, "t": ["Salutations upon the Prophet ﷺ (10x)", "Efendimiz'e Salat ve Selam (10x)", "الصَّلَاةُ عَلَى النَّبِيِّ ﷺ (١٠ مرات)", "Prières sur le Prophète ﷺ (10x)"], "ar": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.", "b": ["Recite 10x: Obtains the intercession of the Prophet ﷺ on the Last Day.", "10 defa: Kıyamet gününde Peygamberimiz'in (s.a.v.) şefaatine nail olur.", "من صلى عليّ حين يُصبح عشراً أدركته شفاعتي يوم القيامة (١٠ مرات).", "10x : Bénéficie de l'intercession du Prophète ﷺ au Jour du Jugement."]}], "m": [{"id": "m1", "c": 1, "t": ["Ayat al-Kursi", "Âyetü'l-Kürsî", "آية الكرسي", "Ayat al-Kursi"], "ar": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ", "b": ["Recite 1x: Protected from evil & shaytan through the night until dawn.", "1 defa: Sabaha kadar her türlü kötülükten ve şeytandan korunur.", "من قرأها حين يُمسي أُجير من الشيطان حتى يُصبح.", "Réciter 1x : Protégé de satan et de tout mal toute la nuit jusqu'à l'aube."]}, {"id": "m2", "c": 3, "t": ["Al-Mu'awwidhat (3x)", "İhlâs, Felak ve Nâs Sureleri (3x)", "المعوذات والإخلاص (٣ مرات)", "Al-Ikhlas, Al-Falaq, An-Nas (3x)"], "ar": "﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴾\n\n﴿ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴾\n\n﴿ قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ ﴾", "b": ["Recite 3x: Suffices you against all evil throughout the night.", "3 defa: Gece boyunca her şeye karşı sana yeter.", "تكفيك من كل شيء طوال ليلتك (٣ مرات).", "Répéter 3x : Suffit amplement contre tout mal durant la nuit."]}, {"id": "m3", "c": 1, "t": ["Evening Praise & Surrender", "Akşam Hamd ve Teslimiyet", "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ", "Louange du soir et soumission"], "ar": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، رَبِّ أَسْأَلُكَ خَيْرَ مَا فِي هَذِهِ اللَّيْلَةِ وَخَيْرَ مَا بَعْدَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا فِي هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا، رَبِّ أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ، رَبِّ أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ.", "b": ["Seeking the night's peace, goodness, and protection from all adversity.", "Gecenin ve sonrasının hayrını dilemek, şerden ve azaptan sığınmak.", "سؤال خير هذه الليلة والتعوذ من شر ما فيها ومن الكسل وعذاب النار والقبر.", "Demander la paix et le bien de cette nuit et protection contre les peines."]}, {"id": "m4", "c": 1, "t": ["By Your Grace We Enter Evening", "Seninle Akşama Erdik", "اللَّهُمَّ بِكَ أَمْسَيْنَا", "Par Ta grâce nous atteignons le soir"], "ar": "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ.", "b": ["Evening renewal of surrender and final return to Allah.", "Akşam vakti Allah'a teslimiyet ve dönüşün O'na olduğunu ikrar.", "تفويض الأمر إلى الله والاعتراف بأن المصير والرجعى إليه سبحانه.", "Affirmation du soir et reconnaissance de notre retour ultime vers Allah."]}, {"id": "m5", "c": 1, "t": ["Sayyid al-Istighfar (Master of Forgiveness)", "Seyyidü'l-İstiğfar (İstiğfarın Efendisi)", "سَيِّدُ الِاسْتِغْفَارِ", "Le Maître de la demande de pardon"], "ar": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.", "b": ["Whoever recites it with certainty and passes that night enters Paradise.", "İnanarak söyleyip o gece vefat eden kimse cennet ehlindendir.", "من قالها موقناً بها ومات في ليلته قبل أن يُصبح دخل الجنة.", "Celui qui la récite avec foi et meurt cette nuit entre au Paradis."]}, {"id": "m6", "c": 3, "t": ["Refuge in the Perfect Words of Allah (3x)", "Allah'ın Kusursuz Kelimelerine Sığınmak (3x)", "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ (٣ مرات)", "Refuge dans les paroles parfaites d'Allah (3x)"], "ar": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", "b": ["Recite 3x: Immune from venomous stings and nightly harms.", "3 defa: Zehirli haşerelerden ve gece gelecek her türlü zarardan koruma.", "لم يضره شيء من لدغة عقرب أو سم أو سوء في تلك الليلة (٣ مرات).", "3x : Protection absolue contre les bêtes venimeuses et tout mal nocturne."]}, {"id": "m7", "c": 3, "t": ["Supplication for Wellness (3x)", "Beden ve Ruh Sağlığı Duası (3x)", "اللَّهُمَّ عَافِنِي فِي بَدَنِي (٣ مرات)", "Invocation pour la santé et le bien-être (3x)"], "ar": "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلَهَ إِلَّا أَنْتَ. اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلَهَ إِلَّا أَنْتَ.", "b": ["Recite 3x: Health in body, hearing, sight, and protection from poverty.", "3 defa: Beden, kulak ve göz için şifa; fakirlik ve kabir azabından korunma.", "دعاء العافية التامة في البدن والسمع والبصر والاستعاذة من الفقر (٣ مرات).", "3x : Santé du corps, de l'ouïe, de la vue et protection contre la pauvreté."]}, {"id": "m8", "c": 1, "t": ["Comprehensive Shield of Well-being", "Kapsamlı Afiyet ve Korunma Duası", "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ", "Protection totale dans toutes les directions"], "ar": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي.", "b": ["Divine protection from all six directions throughout the night.", "Gece boyunca altı yönden tam ilahi koruma ve emniyet.", "حفظ شامل طوال الليل وستر للعورات وأمن من الفزع والشرور.", "Protection divine complète durant toute la nuit pour soi, foi et proches."]}, {"id": "m9", "c": 3, "t": ["In the Name of Allah with Whose Name Nothing Harms (3x)", "İsmiyle Hiçbir Şeyin Zarar Veremeyeceği Allah'ın Adıyla (3x)", "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ (٣ مرات)", "Au Nom d'Allah dont le Nom protège de tout (3x)"], "ar": "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ.", "b": ["Recite 3x: Shielded from every harm until the morning.", "3 defa: Sabaha kadar hiçbir bela ve kötülük zarar veremez.", "لم يضره شيء حتى يصبح ولا تصيبه فجأة بلاء (٣ مرات).", "3x : Bouclier impénétrable contre tout mal jusqu'au matin."]}, {"id": "m10", "c": 3, "t": ["Pleasure with Allah, Islam & the Prophet ﷺ (3x)", "Allah'tan, İslam'dan ve Peygamberimiz'den Razı Olmak (3x)", "رَضِيتُ بِاللَّهِ رَبًّا (٣ مرات)", "Agrément d'Allah, de l'Islam et du Prophète ﷺ (3x)"], "ar": "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا.", "b": ["Recite 3x: Contentment and promised joy on the Day of Judgment.", "3 defa: Kıyamet günü Allah'ın rızasına ve cennetine nailiyet.", "كان حقاً على الله أن يرضيه يوم القيامة (٣ مرات).", "3x : Garantie de satisfaction et de récompense au Jour Dernier."]}, {"id": "m11", "c": 1, "t": ["O Ever-Living, Sustainer of All", "Ey Hayy ve Kayyûm Olan Allah'ım", "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ", "Ô Vivant, Ô Subsistant par Soi-même"], "ar": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.", "b": ["Plea for total guidance and protection from relying on oneself.", "Bütün hallerin düzeltilmesi ve sonsuz rahmete sığınma duası.", "إصلاح الشأن كله وطلب المغفرة والرحمة في كل لحظة.", "Remettre l'ensemble de sa vie à la Miséricorde divine infinie."]}, {"id": "m12", "c": 1, "t": ["Evening upon the Fitrah of Islam", "İslam Fıtratı Üzere Akşama Erdik", "أَمْسَيْنَا عَلَى فِطْرَةِ الْإِسْلَامِ", "Au soir sur la saine nature de l'Islam"], "ar": "أَمْسَيْنَا عَلَى فِطْرَةِ الْإِسْلَامِ، وَعَلَى كَلِمَةِ الْإِخْلَاصِ، وَعَلَى دِينِ نَبِيِّنَا مُحَمَّدٍ ﷺ، وَعَلَى مِلَّةِ أَبِينَا إِبْرَاهِيمَ حَنِيفًا مُسْلِمًا وَمَا كَانَ مِنَ الْمُشْرِكِينَ.", "b": ["Evening dedication upon monotheism and the guidance of the Prophets.", "İslam fıtratı, ihlas kelimesi ve Hz. İbrahim'in dini üzerine akşamlamak.", "تجديد العهد والميثاق على التوحيد الخالص وسنة نبينا محمد ﷺ.", "Renouvellement du pacte de foi et attachement à la Sunnah."]}, {"id": "m13", "c": 100, "t": ["Glory & Praise to Allah (100x)", "Subhanallahi ve Bihamdih (100x)", "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ (١٠٠ مرة)", "Gloire et Louange à Allah (100x)"], "ar": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.", "b": ["Recite 100x: Foremost of all deeds brought forth on Judgment Day.", "100 defa: Kıyamet günü bundan daha faziletli bir amel getirilmez.", "لم يأتِ أحد يوم القيامة بأفضل مما جاء به إلا أحد قال مثل ما قال أو زاد عليه.", "100x : Aucune œuvre ne sera plus méritoire au Jour du Jugement."]}, {"id": "m14", "c": 10, "t": ["The Supreme Declaration of Tawhid (10x)", "Yüce Tevhid Zikri (10x)", "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ (١٠ مرات)", "La suprême attestation d'unicité (10x)"], "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", "b": ["Recite 10x: 100 good deeds, 100 sins erased, shield from evil.", "10 defa: 100 sevap, 100 günahın silinmesi ve şeytandan zırh.", "كتب له مائة حسنة ومُحيت عنه مائة سيئة وكانت له حرزاً من الشيطان (١٠ مرات).", "10x : 100 bonnes actions, 100 péchés effacés et protection divine."]}, {"id": "m15", "c": 10, "t": ["Salutations upon the Prophet ﷺ (10x)", "Efendimiz'e Salat ve Selam (10x)", "الصَّلَاةُ عَلَى النَّبِيِّ ﷺ (١٠ مرات)", "Prières sur le Prophète ﷺ (10x)"], "ar": "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.", "b": ["Recite 10x: Relief of burdens, forgiveness and prophetic intercession.", "10 defa: Dertlerin giderilmesi, günahların affı ve şefaat müjdesi.", "عشر صلوات ومحو عشر سيئات ورفع عشر درجات في الجنة (١٠ مرات).", "10x : Élévation de dix degrés et effacement de dix fautes."]}], "p": [{"id": "p1", "c": 1, "t": ["Istighfar & Greeting of Peace", "İstiğfar ve Selam Duası", "الاستغفار والدعاء بالسلام", "Istighfar et invocation de paix"], "ar": "أَسْتَغْفِرُ اللَّهَ، أَسْتَغْفِرُ اللَّهَ، أَسْتَغْفِرُ اللَّهَ.\nاللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.", "b": ["Said immediately after the Taslim of every obligatory prayer.", "Farz namazın selamından hemen sonra 3 kez istiğfar ve bu dua okunur.", "يقال فور الانتهاء من الصلاة المفروضة والسلام منها.", "Prononcé immédiatement après le salut de la prière obligatoire."]}, {"id": "p2", "c": 1, "t": ["Sovereignty & Supreme Decree", "Tevhid ve Hüküm Duası", "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ (لا مانع لما أعطيت)", "Attestation d'unicité et décret divin"], "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، اللَّهُمَّ لَا مَانِعَ لِمَا أَعْطَيْتَ، وَلَا مُعْطِيَ لِمَا مَنَعْتَ، وَلَا يَنْفَعُ ذَا الْجَدِّ مِنْكَ الْجَدُّ.", "b": ["None can withhold what Allah gives, nor can any grant what He withholds.", "Allah'ın verdiğine kimse mani olamaz, vermediğini de kimse veremez.", "الاعتراف بأن الملك والنفع والمنع والفضل كله بيد الله وحده.", "Nul ne peut empêcher ce qu'Allah donne ni donner ce qu'Il retient."]}, {"id": "p3", "c": 1, "t": ["Sincere Faith & Praise", "İhlas ve Şükür İkrarı", "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ", "Foi sincère et reconnaissance"], "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ، لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ، لَا إِلَهَ إِلَّا اللَّهُ، وَلَا نَعْبُدُ إِلَّا إِيَّاهُ، لَهُ النِّعْمَةُ وَلَهُ الْفَضْلُ وَلَهُ الثَّنَاءُ الْحَسَنُ، لَا إِلَهَ إِلَّا اللَّهُ مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الْكَافِرُونَ.", "b": ["Affirmation of absolute devotion and gratitude for all divine blessings.", "Yalnız Allah'a ibadet etmek, ihsan ettiği nimetlere ve fazilete şükretmek.", "إخلاص العبادة لله وحده والثناء عليه بنعمه الجزيلة وفضله العظيم.", "Consécration exclusive du culte à Allah et louange pour Ses bienfaits."]}, {"id": "p4", "c": 33, "t": ["Tasbih: Subhan Allah (33x)", "Tesbih: Sübhanallah (33x)", "سُبْحَانَ اللَّهِ (٣٣ مرة)", "Tasbih: Subhan Allah (33x)"], "ar": "سُبْحَانَ اللَّهِ", "b": ["33 times: Exalting Allah above every deficiency.", "33 defa: Allah'ı tüm noksanlıklardan tenzih etmek.", "تسبيح الله تعالى وتنزيهه عن كل نقص (٣٣ مرة).", "33x : Pureté et Gloire à Allah au-delà de toute imperfection."]}, {"id": "p5", "c": 33, "t": ["Tahmid: Al-Hamdu Lillah (33x)", "Tahmid: Elhamdülillah (33x)", "الْحَمْدُ لِلَّهِ (٣٣ مرة)", "Tahmid: Al-Hamdu Lillah (33x)"], "ar": "الْحَمْدُ لِلَّهِ", "b": ["33 times: Endless praise and gratitude to Allah.", "33 defa: Allah'a sonsuz hamd, şükür ve senâ.", "حمد الله وشكره على نعمه وإحسانه التي لا تُحصى (٣٣ مرة).", "33x : Louange infinie et reconnaissance pour tous les bienfaits."]}, {"id": "p6", "c": 33, "t": ["Takbir: Allahu Akbar (33x)", "Tekbir: Allahuekber (33x)", "اللَّهُ أَكْبَرُ (٣٣ مرة)", "Takbir: Allahu Akbar (33x)"], "ar": "اللَّهُ أَكْبَرُ", "b": ["33 times: Allah is Greater than everything.", "33 defa: Allah'ın her şeyden yüce ve büyük olduğunu ikrar.", "تكبير الله وتعظيمه وإجلاله فوق كل شيء (٣٣ مرة).", "33x : Allah est infiniment plus Grand que toute chose."]}, {"id": "p7", "c": 1, "t": ["Completion of the Hundred", "100'ü Tamamlama Tevhidi", "تمام المائة (لَا إِلَهَ إِلَّا اللَّهُ)", "Complétion de la centaine"], "ar": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", "b": ["Said once after the 33 tasbihs: Forgiveness of all minor sins like sea foam.", "33 tesbihten sonra 1 kez söylenir: Deniz köpüğü kadar günahlar bağışlanır.", "يُتم بها المائة وتُغفر خطاياه وإن كانت مثل زبد البحر.", "Complète la centaine : tous les péchés sont effacés comme l'écume des mers."]}, {"id": "p8", "c": 1, "t": ["Ayat al-Kursi After Every Prayer", "Her Namazın Ardından Âyetü'l-Kürsî", "آية الكرسي دبر كل صلاة", "Ayat al-Kursi après chaque prière"], "ar": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ", "b": ["Whoever recites it after each fard prayer, nothing prevents entry to Paradise except death.", "Farz namazların ardından okuyanın cennete girmesine sadece ölüm mani olur.", "من قرأ آية الكرسي دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت.", "Récitée après chaque prière obligatoire : promesse d'accès au Paradis."]}, {"id": "p9", "c": 1, "t": ["Al-Mu'awwidhat (Ikhlas, Falaq, Nas)", "İhlâs, Felak ve Nâs Sureleri", "المعوذات دبر كل صلاة", "Al-Mu'awwidhat (Ikhlas, Falaq, Nas)"], "ar": "﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾ • ﴿ قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴾ • ﴿ قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴾", "b": ["Recite 1x after Dhuhr, Asr, Isha; 3x after Fajr and Maghrib.", "Öğle, İkindi ve Yatsıdan sonra 1'er; Sabah ve Akşamdan sonra 3'er defa.", "تُقرأ مرة بعد الظهر والعصر والعشاء، وثلاث مرات بعد الفجر والمغرب.", "1x après Dhohr, Asr, Icha ; 3x après Fajr et Maghrib."]}, {"id": "p10", "c": 1, "t": ["Supplication for Help in Remembrance & Gratitude", "Zikir ve Şükür İçin Yardım Duası", "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ", "Demande d'aide pour le rappel et la gratitude"], "ar": "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ.", "b": ["Recommended by the Prophet ﷺ to Mu'adh (ra) never to leave after any prayer.", "Peygamberimiz'in Hz. Muaz'a hiçbir namazın ardında bırakmamasını vasiyet ettiği dua.", "وصية النبي ﷺ لمعاذ بن جبل ألا يدعها دبر كل صلاة مكتوبة.", "Recommandation prophétique adressée à Mu'adh de ne jamais l'omettre."]}]};
+Object.assign(V,{
+  as:['🌅 Sabah','🌅 Sabah','🌅 أذكار الصباح','🌅 Matin'],
+  am:['🌇 Masaa','🌇 Akşam','🌇 أذكار المساء','🌇 Soir'],
+  ap:['🕌 Post-Prayer','🕌 Namaz Sonrası','🕌 بعد الصلاة','🕌 Après Prière'],
+  az_done:['Completed!','Tamamlandı!','تم بحمد الله!','Terminé !'],
+  az_all_done:['MashaAllah, you finished all adhkar! 🌟','Maşallah, tüm zikirleri tamamladın! 🌟','ما شاء الله، أتممتِ جميع الأذكار! 🌟','MachaAllah, tu as terminé tous les adhkar ! 🌟'],
+  az_rst:['Reset Today','Bugünü Sıfırla','إعادة ضبط اليوم','Réinitialiser'],
+  az_prog:['completed','tamamlandı','مكتمل','complétés'],
+  az_tap:['Tap to count','Saymak için dokun','المس للعد','Toucher pour compter']
+});
+function AZ_ST(cat){
+  if(!S.azkar||typeof S.azkar!=='object'||S.azkar.day!==today()){S.azkar={day:today(),s:{},m:{},p:{}};}
+  if(!S.azkar[cat]||typeof S.azkar[cat]!=='object')S.azkar[cat]={};
+  return S.azkar[cat];
+}
+function AZK(cat,b){
+  const ds=AZD[cat]||[],st=AZ_ST(cat);
+  const dn=ds.filter(x=>(st[x.id]||0)>=x.c).length;
+  const pct=ds.length?Math.round((dn/ds.length)*100):0;
+  const titles={
+    s:['🌅 Morning Adhkar (Azkar al-Sabah)','🌅 Sabah Zikirleri (Ezkâr-ı Sabah)','🌅 أذكار الصباح النبوية','🌅 Adhkar du Matin'],
+    m:['🌇 Evening Adhkar (Azkar al-Masaa)','🌇 Akşam Zikirleri (Ezkâr-ı Mesâ)','🌇 أذكار المساء النبوية','🌇 Adhkar du Soir'],
+    p:['🕌 Adhkar After Prayer (Ba\'d as-Salah)','🕌 Namaz Sonrası Zikirler','🕌 أذكار ما بعد الصلاة المفروضة','🕌 Adhkar Après la Prière']
+  };
+  let h=`<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">`+
+    `<span style="font-weight:800;font-size:.95rem">${titles[cat][li_()]}</span>`+
+    `<button class="pill mini" id="az_rst" style="font-size:.75rem;padding:3px 10px">🔄 ${v('az_rst')}</button>`+
+    `</div>`+
+    `<div style="display:flex;justify-content:space-between;align-items:center;font-size:.8rem;font-weight:800;margin-bottom:4px">`+
+    `<span>✨ ${dn} / ${ds.length} ${v('az_prog')}</span><span class="chip">${pct}%</span>`+
+    `</div>`+
+    `<div style="background:var(--in);border:1.5px solid var(--bd);border-radius:999px;height:9px;overflow:hidden;padding:1px;margin-bottom:12px">`+
+    `<div style="background:linear-gradient(90deg,var(--p),#10b981);height:100%;border-radius:999px;width:${pct}%;transition:width .3s ease"></div>`+
+    `</div>`+
+    (dn===ds.length&&ds.length>0?`<div class="bub" style="text-align:center;font-weight:800;background:rgba(16,185,129,.12);border-color:#10b981;color:#065f46;margin-bottom:12px;padding:12px;border-radius:14px">🎉 ${v('az_all_done')}</div>`:'');
+
+  h+=ds.map((x,i)=>{
+    const c=st[x.id]||0,ok=c>=x.c;
+    return `<div class="bub" style="margin-bottom:12px;border:2px solid ${ok?'#10b981':'var(--bd)'};background:${ok?'rgba(16,185,129,0.05)':'var(--sec)'};border-radius:16px;padding:12px 14px">`+
+      `<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">`+
+      `<div style="display:flex;align-items:center;gap:6px;flex:1"><span class="chip" style="font-weight:800;font-size:.78rem">#${i+1}</span><b style="font-size:.95rem">${esc(x.t[li_()])}</b></div>`+
+      `<span class="chip" style="font-weight:800;background:${ok?'#10b981':'var(--p)'};color:#fff;border-color:${ok?'#059669':'var(--p)'}">${x.c}x</span>`+
+      `</div>`+
+      `<div dir="rtl" style="font-size:1.25rem;line-height:2.05;text-align:center;font-weight:600;margin:10px 0 8px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Amiri','Traditional Arabic',serif;white-space:pre-line">${esc(x.ar)}</div>`+
+      `<div style="font-size:.82rem;font-weight:600;opacity:.88;line-height:1.45;margin-bottom:10px;padding:6px 10px;border-radius:10px;background:rgba(0,0,0,0.03)">💡 ${esc(x.b[li_()])}</div>`+
+      (ok
+        ? `<button class="go" data-az="${x.id}" style="width:100%;padding:10px;font-size:1.02rem;font-weight:800;border-radius:999px;background:#10b981;border:2px solid #059669;color:#fff;box-shadow:none;display:flex;align-items:center;justify-content:center;gap:6px">✨ ${v('az_done')} (${x.c}/${x.c})</button>`
+        : `<button class="go" data-az="${x.id}" style="width:100%;padding:10px;font-size:1.08rem;font-weight:800;border-radius:999px;background:var(--in);border:2px solid var(--bd);box-shadow:none;display:flex;align-items:center;justify-content:center;gap:8px">📿 <span style="font-size:1.2rem;color:var(--p)">${c}</span> / ${x.c} <small style="font-size:.75rem;opacity:.7">(${v('az_tap')})</small></button>`
+      )+
+      `</div>`;
+  }).join('');
+
+  b.innerHTML=h;
+  const rb=$('az_rst');if(rb)rb.onclick=()=>{if(confirm(v('az_rst')+'?')){const s=AZ_ST(cat);Object.keys(s).forEach(k=>delete s[k]);save();sfx('tap');AZK(cat,b)}};
+  b.querySelectorAll('[data-az]').forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.dataset.az,it=ds.find(x=>x.id===id);
+      if(!it)return;
+      const s=AZ_ST(cat),cur=s[id]||0;
+      if(cur<it.c){
+        s[id]=cur+1;
+        try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}
+        if(s[id]>=it.c){
+          sfx('crystal');
+          const all=ds.length&&ds.every(x=>(s[x.id]||0)>=x.c);
+          if(all){try{setCoins(5)}catch(e){}sfx('level')}
+        } else {
+          sfx('tap');
+        }
+        save();AZK(cat,b);
+      } else {
+        sfx('crystal');
+      }
+    };
+  });
+}
+function R(){card.innerHTML=`<h2><span>🌙 ${v('ti')}</span></h2>${MQ}<div class="row" style="margin:8px 0 10px">`+[['h','📜'],['as','🌅'],['am','🌇'],['ap','🕌'],['q','📖'],['r','⏰'],['t','📿'],['p','🌸']].map(x=>`<button class="pill ${tab==x[0]?'on':''}" data-gt="${x[0]}">${x[1]} ${v(x[0])}</button>`).join('')+'</div><div id="gtb"></div>';
+ card.querySelectorAll('[data-gt]').forEach(b=>b.onclick=()=>{tab=b.dataset.gt;R();sfx('tap')});({h:HH,as:()=>AZK('s',$('gtb')),am:()=>AZK('m',$('gtb')),ap:()=>AZK('p',$('gtb')),q:QQ,p:PP,r:RR,t:TT})[tab]($('gtb'))}
 /* ---- Hadith: shuffled deck, never repeats until all 400 are seen ---- */
 function rs(h){h.o=HD.map((_,i)=>i);for(let i=h.o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[h.o[i],h.o[j]]=[h.o[j],h.o[i]]}h.p=0}
 function take(h,rnd){if(h.p>=h.o.length)rs(h);if(rnd){const j=h.p+Math.floor(Math.random()*(h.o.length-h.p));[h.o[h.p],h.o[j]]=[h.o[j],h.o[h.p]]}return h.o[h.p++]}
@@ -2235,8 +2317,8 @@ function deleteCase(id){
 }
 
 /* Modals */
-const LWM=document.createElement('div');LWM.id='lwm';LWM.hidden=true;LWM.innerHTML='<div class="card gdc" role="dialog" aria-modal="true" style="max-width:540px;max-height:90vh;overflow-y:auto"></div>';document.body.appendChild(LWM);
-const LWP=document.createElement('div');LWP.id='lwp';LWP.hidden=true;LWP.innerHTML='<div class="card gdc" role="dialog" aria-modal="true" style="max-width:560px;max-height:90vh;overflow-y:auto"></div>';document.body.appendChild(LWP);
+const LWM=document.createElement('div');LWM.id='lwm';LWM.hidden=true;LWM.innerHTML='<div class="card lw-dialog" role="dialog" aria-modal="true"></div>';document.body.appendChild(LWM);
+const LWP=document.createElement('div');LWP.id='lwp';LWP.hidden=true;LWP.innerHTML='<div class="card lw-dialog" role="dialog" aria-modal="true"></div>';document.body.appendChild(LWP);
 
 const closeModals=()=>{[LWM,LWP].forEach(m=>{m.hidden=true;});document.body.style.overflow='';};
 [LWM,LWP].forEach(m=>{m.onclick=e=>{if(e.target===m)closeModals();};});
@@ -2250,71 +2332,82 @@ function editCase(id){
 
  const draw=()=>{
    c.innerHTML=`
-   <h2>⚖️ ${old?N({en:['Edit Case & Hearing','Davayı Düzenle','تعديل بيانات القضية','Modifier']})[LI()]:N(LW.add)}</h2>
-   <label for="lwt">${N(LW.f_ti)} *</label>
-    <input class="in" id="lwt" maxlength="80" value="${esc(F.t)}" placeholder="${N({en:['e.g. Appeal Hearing - Real Estate Case','Örn: Ticaret Mahkemesi Duruşması','مثال: جلسة الاستئناف - قضية العقار',"ex: Audience d'appel"]})[LI()]}" autocomplete="off">
-
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-     <div>
-       <label for="lwcourt">${N(LW.f_court)}</label>
-       <input class="in" id="lwcourt" maxlength="80" value="${esc(F.court)}" placeholder="${N({en:['Court / Chamber','Mahkeme / Daire','المحكمة / الغرفة','Tribunal']})[LI()]}">
-     </div>
-     <div>
-       <label for="lwno">${N(LW.f_no)}</label>
-       <input class="in" id="lwno" maxlength="40" value="${esc(F.no)}" placeholder="2026/142">
-     </div>
+   <div class="lw-head">
+     <h2 style="margin:0;font-size:1.15rem;display:flex;align-items:center;gap:6px">⚖️ ${old?N({en:['Edit Case & Hearing','Davayı Düzenle','تعديل بيانات القضية','Modifier']})[LI()]:N(LW.add)}</h2>
+     <button type="button" class="mini" id="lw_close" aria-label="close" style="font-size:1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">✕</button>
    </div>
-
-   <label for="lwcl">${N(LW.f_cl)}</label>
-   <input class="in" id="lwcl" maxlength="60" value="${esc(F.client)}" placeholder="${N({en:['Client name / Opponent','Müvekkil / Karşı taraf','اسم الموكل / الخصم','Client']})[LI()]}">
-
-   <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:8px">
+   <div class="lw-body">
      <div>
-       <label for="lwd">${N(LW.f_dt)}</label>
-       <input class="in" id="lwd" type="date" value="${F.d}">
+       <label for="lwt">${N(LW.f_ti)} *</label>
+       <input class="in" id="lwt" maxlength="80" value="${esc(F.t)}" placeholder="${N({en:['e.g. Appeal Hearing - Real Estate Case','Örn: Ticaret Mahkemesi Duruşması','مثال: جلسة الاستئناف - قضية العقار',"ex: Audience d'appel"]})[LI()]}" autocomplete="off">
      </div>
-     <div>
-       <label for="lwtm">${N(LW.f_tm)}</label>
-       <input class="in" id="lwtm" type="time" value="${F.tm}">
-     </div>
-   </div>
 
-   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-     <div>
-       <label for="lwrm">${N(LW.f_rm)}</label>
-       <select class="in" id="lwrm">
-         ${LW.rm_opt.map((o,i)=>`<option value="${[0,1,2,3,7][i]}" ${F.rm==[0,1,2,3,7][i]?'selected':''}>🔔 ${esc(N(o))}</option>`).join('')}
-       </select>
-     </div>
-     <div>
-       <label for="lwst">${N(LW.f_st)}</label>
-       <select class="in" id="lwst">
-         ${LW.st_list.map((s,i)=>`<option value="${i}" ${F.st==i?'selected':''}>${['⏳','⚖️','💎','📅'][i]} ${esc(N(s))}</option>`).join('')}
-       </select>
-     </div>
-   </div>
-
-   <label>${N(LW.f_prep)}</label>
-   <div id="lwtasks" style="display:flex;flex-direction:column;gap:6px;margin-bottom:6px">
-     ${F.tasks.map((t,idx)=>`
-       <div class="row" style="gap:6px">
-         <input type="checkbox" data-pk="${idx}" ${t.d?'checked':''} style="accent-color:var(--p);width:18px;height:18px">
-         <input class="in" data-pt="${idx}" value="${esc(t.t)}" style="flex:1" maxlength="80">
-         <button type="button" class="mini" data-pdel="${idx}">🗑</button>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+       <div>
+         <label for="lwcourt">${N(LW.f_court)}</label>
+         <input class="in" id="lwcourt" maxlength="80" value="${esc(F.court)}" placeholder="${N({en:['Court / Chamber','Mahkeme / Daire','المحكمة / الغرفة','Tribunal']})[LI()]}">
        </div>
-     `).join('')}
+       <div>
+         <label for="lwno">${N(LW.f_no)}</label>
+         <input class="in" id="lwno" maxlength="40" value="${esc(F.no)}" placeholder="2026/142">
+       </div>
+     </div>
+
+     <div>
+       <label for="lwcl">${N(LW.f_cl)}</label>
+       <input class="in" id="lwcl" maxlength="60" value="${esc(F.client)}" placeholder="${N({en:['Client name / Opponent','Müvekkil / Karşı taraf','اسم الموكل / الخصم','Client']})[LI()]}">
+     </div>
+
+     <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:8px">
+       <div>
+         <label for="lwd">${N(LW.f_dt)} *</label>
+         <input class="in" id="lwd" type="date" value="${F.d}" required>
+       </div>
+       <div>
+         <label for="lwtm">${N(LW.f_tm)}</label>
+         <input class="in" id="lwtm" type="time" value="${F.tm}">
+       </div>
+     </div>
+
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+       <div>
+         <label for="lwrm">${N(LW.f_rm)}</label>
+         <select class="in" id="lwrm">
+           ${LW.rm_opt.map((o,i)=>`<option value="${[0,1,2,3,7][i]}" ${F.rm==[0,1,2,3,7][i]?'selected':''}>🔔 ${esc(N(o))}</option>`).join('')}
+         </select>
+       </div>
+       <div>
+         <label for="lwst">${N(LW.f_st)}</label>
+         <select class="in" id="lwst">
+           ${LW.st_list.map((s,i)=>`<option value="${i}" ${F.st==i?'selected':''}>${['⏳','⚖️','💎','📅'][i]} ${esc(N(s))}</option>`).join('')}
+         </select>
+       </div>
+     </div>
+
+     <label style="margin-top:4px">${N(LW.f_prep)}</label>
+     <div id="lwtasks" style="display:flex;flex-direction:column;gap:6px">
+       ${F.tasks.map((t,idx)=>`
+         <div class="row" style="gap:6px;align-items:center">
+           <input type="checkbox" data-pk="${idx}" ${t.d?'checked':''} style="accent-color:var(--p);width:18px;height:18px;cursor:pointer">
+           <input class="in" data-pt="${idx}" value="${esc(t.t)}" style="flex:1" maxlength="80" placeholder="${N({en:['Hearing preparation task...','Hazırlık maddesi...','عنصر تحضيري للجلسة...','Tâche de préparation...']})[LI()]}">
+           <button type="button" class="mini" data-pdel="${idx}" title="Delete" style="color:#ef4444">🗑</button>
+         </div>
+       `).join('')}
+     </div>
+     <button type="button" class="pill" id="lwtadd" style="font-size:.82rem;align-self:flex-start;margin-top:2px">+ ${N(LW.f_prep_add)}</button>
+
+     <label for="lwnt" style="margin-top:4px">${N(LW.f_nt)}</label>
+     <textarea class="in" id="lwnt" rows="3" maxlength="800" placeholder="${N({en:['Defense strategy, article references, evidence checklist...','Savunma stratejisi, madde referansları, delil listesi...','خطة الدفاع، المواد القانونية، المذكرات، قائمة الأدلة...','Stratégie de défense, articles de loi, preuves...']})[LI()]}">${esc(F.notes)}</textarea>
    </div>
-   <button type="button" class="pill" id="lwtadd" style="font-size:.8rem;margin-bottom:10px">${N(LW.f_prep_add)}</button>
 
-   <label for="lwnt">${N(LW.f_nt)}</label>
-   <textarea class="in" id="lwnt" rows="3" maxlength="800" placeholder="${N({en:['Defense strategy, article references, evidence checklist...','Savunma stratejisi, madde referansları, delil listesi...','خطة الدفاع، المواد القانونية، المذكرات، قائمة الأدلة...','Stratégie de défense, articles de loi, preuves...']})[LI()]}">${esc(F.notes)}</textarea>
-
-   <div class="gdb" style="margin-top:12px">
-     <button type="button" class="go" id="lwsave">${N(LW.save)}</button>
+   <div class="lw-foot">
+     ${old?`<button type="button" class="pill" id="lwdel" style="color:#ef4444;border-color:#ef4444;margin-inline-end:auto">🗑 ${N(LW.del)}</button>`:''}
      <button type="button" class="pill" id="lwcan">${N(LW.cancel)}</button>
-     ${old?`<button type="button" class="pill" id="lwdel">🗑 ${N(LW.del)}</button>`:''}
+     <button type="button" class="go" id="lwsave" style="padding:10px 22px;font-size:1rem;font-weight:800;border-radius:999px;box-shadow:var(--gl)">⚖️ ${N(LW.save)}</button>
    </div>
    `;
+
+   const closeBtn=$('lw_close');if(closeBtn)closeBtn.onclick=closeModals;
 
    const syncF=()=>{
      F.t=$('lwt').value.trim();
@@ -2386,14 +2479,20 @@ function openLawyerPad(){
  const law=getLawyer();
  const c=LWP.firstChild;LWP.dir=S.lang==='ar'?'rtl':'ltr';
  c.innerHTML=`
- <h2>${N(LW.pad_ti)}</h2>
- <p style="font-size:.82rem;color:var(--mu);font-weight:700;margin-bottom:8px">${N(LW.pad_pl)}</p>
- <textarea class="in" id="lwptext" rows="12" style="font-family:inherit;line-height:1.6;font-size:.92rem;font-weight:600" placeholder="${N(LW.pad_pl)}">${esc(law.notes)}</textarea>
- <div class="gdb" style="margin-top:10px">
-   <button type="button" class="go" id="lwpsave">${N(LW.save)}</button>
+ <div class="lw-head">
+   <h2 style="margin:0;font-size:1.15rem;display:flex;align-items:center;gap:6px">⚖️ ${N(LW.pad_ti)}</h2>
+   <button type="button" class="mini" id="lwp_close" aria-label="close" style="font-size:1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center">✕</button>
+ </div>
+ <div class="lw-body">
+   <p style="font-size:.82rem;color:var(--mu);font-weight:700;margin:0 0 6px">${N(LW.pad_pl)}</p>
+   <textarea class="in" id="lwptext" rows="12" style="font-family:inherit;line-height:1.6;font-size:.92rem;font-weight:600;flex:1" placeholder="${N(LW.pad_pl)}">${esc(law.notes)}</textarea>
+ </div>
+ <div class="lw-foot">
    <button type="button" class="pill" id="lwpcl">${N(LW.cancel)}</button>
+   <button type="button" class="go" id="lwpsave" style="padding:10px 22px;font-size:1rem;font-weight:800;border-radius:999px;box-shadow:var(--gl)">📝 ${N(LW.save)}</button>
  </div>
  `;
+ $('lwp_close').onclick=closeModals;
  $('lwpcl').onclick=closeModals;
  $('lwpsave').onclick=()=>{
    law.notes=$('lwptext').value;
