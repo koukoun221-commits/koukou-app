@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Diamond KouKou 💎</title>
-<meta name="description" content="Study planner with focus timer, mood diary and sound garden."><meta name="theme-color" content="#ff3366"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Study planner with focus timer, mood diary and sound garden."><meta name="theme-color" content="#b81745"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{--p:#ff3366;--bg1:#fff0f3;--bg2:#ffd6e0;--bd:#ffccd5;--tx:#3d1f28;--mu:#875463;--card:rgba(255,255,255,.93);--in:#fff;--sec:#fff0f3;--r:20px;--gl:0 10px 28px color-mix(in srgb,var(--p) 22%,transparent)}
+:root{--p:#b81745;--bg1:#fff0f3;--bg2:#ffd6e0;--bd:#ffccd5;--tx:#3d1f28;--mu:#875463;--card:rgba(255,255,255,.93);--in:#fff;--sec:#fff0f3;--r:20px;--gl:0 10px 28px color-mix(in srgb,var(--p) 22%,transparent)}
 body.dark{--bg1:#1b1220;--bg2:#2a1a33;--card:rgba(40,28,48,.92);--in:#2f2038;--sec:#35243f;--tx:#f7e9f0;--mu:#c9a9bb;--bd:#4d3560}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:Quicksand,Cairo,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));background-attachment:fixed;color:var(--tx);min-height:100vh;padding:14px 12px 60px;transition:background .5s,color .3s}
@@ -326,6 +326,8 @@ body{overflow-x:clip}
 .syw .stt.ok{border-color:#16a34a}.syw .stt.err{border-color:#dc2626}
 .syw .bad{color:#b91c1c;font-weight:800}
 #syc.busy{animation:sycs 1s linear infinite}@keyframes sycs{50%{opacity:.45}}
+.lkc #sp{min-width:44px;min-height:44px}.lk-note{font-size:.72rem;font-weight:700;color:var(--mu);margin:10px 0;line-height:1.45}
+@media(max-width:600px){.pill{min-height:44px}.ico,.mini{min-width:44px;min-height:44px}.chk{width:44px;height:44px;min-width:44px}input[type=checkbox]{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}.cups button,.am button,.cal button{min-width:44px;min-height:44px}.go,.ayg button,.dpad button,.sdn,.sdmo button,.spd button,.smp,.ts button{min-width:44px;min-height:44px}.wk{gap:4px}.wk button{min-width:44px}}
 </style>
 </head>
 <body>
@@ -375,7 +377,7 @@ body{overflow-x:clip}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 /* ===== DATA ===== */
-const CH={hellokitty:{n:'Hello Kitty',e:'🎀',p:'#ff3366',a:'#fff0f3',b:'#ffd6e0',h:'#fff',s:'#3d1f28',ear:'t',w:1,bow:1},cinnamoroll:{n:'Cinnamoroll',e:'☁️',p:'#3894e6',a:'#f0f7ff',b:'#d6ebff',h:'#fff',s:'#183454',ear:'l'},mymelody:{n:'My Melody',e:'🍓',p:'#ec4899',a:'#fff0f7',b:'#fcd5e9',h:'#f472b6',s:'#4a1932',ear:'l',bow:1},kuromi:{n:'Kuromi',e:'💜',p:'#8b5cf6',a:'#f7f2ff',b:'#e6d7ff',h:'#3b2457',s:'#140625',ear:'t',skull:1},chococat:{n:'Chococat',e:'🍫',p:'#795548',a:'#faf5f0',b:'#eee0d5',h:'#2a1b14',s:'#140c08',ear:'t',w:1,big:1},pochacco:{n:'Pochacco',e:'🐾',p:'#059669',a:'#f0fdf4',b:'#d1fae5',h:'#fff',s:'#064e3b',ear:'f'}};
+const CH={hellokitty:{n:'Hello Kitty',e:'🎀',p:'#b81745',a:'#fff0f3',b:'#ffd6e0',h:'#fff',s:'#3d1f28',ear:'t',w:1,bow:1},cinnamoroll:{n:'Cinnamoroll',e:'☁️',p:'#145f9e',a:'#f0f7ff',b:'#d6ebff',h:'#fff',s:'#183454',ear:'l'},mymelody:{n:'My Melody',e:'🍓',p:'#b10f54',a:'#fff0f7',b:'#fcd5e9',h:'#f472b6',s:'#4a1932',ear:'l',bow:1},kuromi:{n:'Kuromi',e:'💜',p:'#6835b5',a:'#f7f2ff',b:'#e6d7ff',h:'#3b2457',s:'#140625',ear:'t',skull:1},chococat:{n:'Chococat',e:'🍫',p:'#795548',a:'#faf5f0',b:'#eee0d5',h:'#2a1b14',s:'#140c08',ear:'t',w:1,big:1},pochacco:{n:'Pochacco',e:'🐾',p:'#087451',a:'#f0fdf4',b:'#d1fae5',h:'#fff',s:'#064e3b',ear:'f'}};
 const L=['en','tr','ar','fr'];
 const FL=(vb,b)=>`<svg class="flg" viewBox="${vb}" preserveAspectRatio="xMidYMid slice">${b}</svg>`;
 const FLAGS={
@@ -392,7 +394,7 @@ const RANKS=[['Freshman','Yeni Yıldız','نجمة جديدة','Étoile'],['Hono
 const MOODS=['😭','😔','😐','😊','🥰'];
 const BADGES=[['🌱','1',s=>s.st.done>=1],['⭐','10',s=>s.st.done>=10],['🏅','50',s=>s.st.done>=50],['🔥','3d',s=>s.streak.n>=3],['🌟','7d',s=>s.streak.n>=7],['🍅','5🍅',s=>s.st.pomos>=5],['💎','100💎',s=>s.st.total>=100],['🛍️','×4',s=>s.owned.length>=4],['🚀','lv5',s=>s.g&&s.g.lv>=5],['🎡','spin',s=>s.g&&s.g.nsp>=1],['📅','7d login',s=>s.g&&s.g.ls>=7],['🎯','5 challenges',s=>s.g&&s.g.nch>=5],['🧠','25🍅',s=>s.st.pomos>=25],['💯','100',s=>s.st.done>=100]];
 /* ===== STATE (safe, versioned) ===== */
-const KEY='koukou_v4',ds=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),today=()=>ds(new Date()),yday=()=>{const d=new Date();d.setDate(d.getDate()-1);return ds(d)},uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const KEY='koukou_v4',ds=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),today=()=>ds(new Date()),yday=()=>{const d=new Date();d.setDate(d.getDate()-1);return ds(d)},uid=()=>{const r=new Uint32Array(2);try{crypto.getRandomValues(r);return Date.now().toString(36)+r[0].toString(36)+r[1].toString(36)}catch(e){return Date.now().toString(36)+Math.random().toString(36).slice(2,12)}};
 const DEF=()=>({v:4,lang:L.includes((navigator.language||'').slice(0,2))?navigator.language.slice(0,2):'en',char:'hellokitty',nick:'The Diamond KouKou',candies:42,owned:['tiara'],eq:{h:'tiara',f:''},sound:true,vol:60,dark:!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches),day:today(),water:{goal:5,n:2},
 habits:[{id:'h1',n:'Lecture focus & notes 🎓',d:true},{id:'h2',n:'30-min reading 📖',d:false},{id:'h3',n:'Skincare & night glow 🪞',d:false}],
 quests:[{id:'q1',t:'Review lecture slides & make a mind map',c:0,p:0,d:'',done:false},{id:'q2',t:'Iced matcha + plan outfits',c:1,p:2,d:'',done:true}],
@@ -600,10 +602,15 @@ function pomoMode(){pomoPause();pomo.brk=!pomo.brk;pomo.left=dur();pm.textConten
 function pomoDone(){clearInterval(pomo.tm);pomo.tm=null;sfx('bell');burst(null,24);if(!pomo.brk){S.st.pomos++;const r=Math.min(8,Math.max(1,Math.round(S.pm.w/3)));setCoins(r);toast(tr('won').replace('+8','+'+r))}else toast(tr('brk'));pomo.brk=!pomo.brk;pomo.left=dur();pm.textContent=pomo.brk?'☕':'🎓';pomoDraw();try{if('Notification' in window&&Notification.permission=='granted'){const o={body:pomo.brk?tr('brk'):'🎓',icon:window.KK_ICON||'icon-192.png'};try{new Notification('💎 KouKou',o)}catch(e){navigator.serviceWorker&&navigator.serviceWorker.ready.then(r=>r.showNotification('💎 KouKou',o))}}}catch(e){}}
 function editPomo(){form('⚙️',[{k:'w',l:'Focus (min)',v:S.pm.w,t:'number'},{k:'b',l:'Break (min)',v:S.pm.b,t:'number'}],o=>{S.pm={w:Math.max(1,Math.min(180,Math.round(+o.w)||25)),b:Math.max(1,Math.min(60,Math.round(+o.b)||5))};save();pomoReset();if('Notification' in window&&Notification.permission=='default')Notification.requestPermission()})}
 /* backup */
-function openBackup(){form('💾',[],()=>{});df.innerHTML=`<h2>💾 Backup</h2><p style="font-weight:700;margin-bottom:12px">Save your whole sanctuary to a file, or restore it anywhere.</p><div class="row"><button type="button" class="go" style="flex:1;margin:0" onclick="exp()">⬇️ Export</button><button type="button" class="go" style="flex:1;margin:0" onclick="impF.click()">⬆️ Import</button></div><input type="file" id="impF" accept=".json" hidden onchange="imp(this.files[0])"><button type="button" class="pill" style="margin-top:12px;color:#dc2626" onclick="wipe()">🧹 Reset all</button> <button type="button" class="pill" onclick="dlg.close()">✕</button>`}
+function openBackup(){const b={en:['Backup','Export or restore planner data. Voice recordings and cloud-sync credentials are not included.','Export','Import','Reset this device'],tr:['Yedekleme','Planlayıcı verilerini dışa aktar veya geri yükle. Ses kayıtları ve bulut eşitleme bilgileri dahil değildir.','Dışa aktar','İçe aktar','Bu cihazı sıfırla'],ar:['نسخة احتياطية','صدّري بيانات المخطط أو استعيديها. لا تشمل التسجيلات الصوتية أو بيانات المزامنة السحابية.','تصدير','استيراد','إعادة ضبط هذا الجهاز'],fr:['Sauvegarde','Exporte ou restaure les données du planning. Les enregistrements vocaux et les identifiants cloud ne sont pas inclus.','Exporter','Importer','Réinitialiser cet appareil']}[S.lang]||['Backup','Export or restore planner data. Voice recordings and cloud-sync credentials are not included.','Export','Import','Reset this device'];form('💾',[],()=>{});df.innerHTML=`<h2>💾 ${b[0]}</h2><p style="font-weight:700;margin-bottom:12px">${esc(b[1])}</p><div class="row"><button type="button" class="go" style="flex:1;margin:0" onclick="exp()">⬇️ ${b[2]}</button><button type="button" class="go" style="flex:1;margin:0" onclick="impF.click()">⬆️ ${b[3]}</button></div><input type="file" id="impF" accept=".json" hidden onchange="imp(this.files[0])"><button type="button" class="pill" style="margin-top:12px;color:#dc2626" onclick="wipe()">🧹 ${b[4]}</button> <button type="button" class="pill" onclick="dlg.close()">✕</button>`}
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='koukou-backup-'+today()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2e3);sfx('buy');toast(tr('saved'))}
-function imp(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||o.v!==4||!Array.isArray(o.quests))throw 0;S=clean(o);save();dlg.close();boot();toast(tr('saved'));sfx('level')}catch(e){sfx('err');toast('❌ '+(window.VS?VS('badbk'):'Invalid backup file'))}};r.readAsText(f)}
-function wipe(){if(confirm(window.VS?VS('rall'):'Reset everything?')){S=DEF();save();dlg.close();boot()}}
+function imp(f){if(!f)return;const bad=()=>{sfx('err');toast('❌ '+(window.VS?VS('badbk'):'Invalid backup file'))};if(f.size>10*1024*1024){bad();return}const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!=='object'||Array.isArray(o)||o.v!==4||!Array.isArray(o.quests)||o.quests.length>2000)throw 0;S=clean(o);save();dlg.close();boot();toast(tr('saved'));sfx('level')}catch(e){bad()}};r.onerror=bad;r.readAsText(f)}
+async function wipe(){const msg={en:'Reset this device, including its lock and voice recordings? Cloud data is not deleted.',tr:'Bu cihaz sıfırlansın mı? Kilit ve ses kayıtları silinir; bulut verisi silinmez.',ar:'إعادة ضبط هذا الجهاز، بما يشمل القفل والتسجيلات؟ لن تُحذف البيانات السحابية.',fr:'Réinitialiser cet appareil, y compris son verrou et ses enregistrements ? Les données cloud ne sont pas supprimées.'}[S.lang]||'Reset this device? Cloud data is not deleted.';if(!confirm(msg))return;
+ clearTimeout(sv);
+ try{const rm=['koukou_v4','koukou_bak','koukou_lock','koukou_candies_v3','koukou_lang_v3','koukou_char_v3','koukou_nolock','koukou_fb_sync','koukou_fb_cf','koukou_presync'];rm.forEach(k=>localStorage.removeItem(k));for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i);if(k&&k.startsWith('notif_sent_'))localStorage.removeItem(k)}}catch(e){}
+ try{if(window._voiceReset)await window._voiceReset()}catch(e){}
+ try{if(window._syncReset)await window._syncReset()}catch(e){}
+ dlg.close();location.reload()}
 function togDark(){S.dark=!S.dark;save();theme();sfx('sw')}
 function boot(){S.amb=S.amb||{};newDay();vol.value=S.vol;syncSnd();cn.textContent=S.candies;pomo.left=dur();theme();i18n();pomoDraw()}
 addEventListener('pointerdown',()=>{if(S.sound)try{au()}catch(e){}},{once:true});
@@ -618,6 +625,7 @@ const $=id=>document.getElementById(id),LK='koukou_lock',ST=Math.max,inr=v=>docu
 Object.assign(T,{
 lk1:['Create your secret password 🔐','Gizli şifreni oluştur 🔐','أنشئي كلمة سرك 🔐','Crée ton mot de passe 🔐'],
 lk2:['Set it once — it stays fixed forever.','Bir kez belirle — sonsuza dek sabit kalır.','تُحدَّد مرة واحدة وتبقى ثابتة.','Une seule fois — il reste fixe.'],
+lkNote:['This is an app screen lock; it does not encrypt data stored in this browser.','Bu, uygulama ekran kilididir; bu tarayıcıda kayıtlı verileri şifrelemez.','هذا قفل شاشة للتطبيق فقط؛ ولا يشفّر البيانات المخزنة في هذا المتصفح.','Ce verrou protège l’écran de l’application ; il ne chiffre pas les données stockées dans ce navigateur.'],
 lk3:['Welcome back, queen 👑','Hoş geldin, kraliçe 👑','أهلاً بعودتك يا ملكة 👑','Bon retour, reine 👑'],
 pw:['Password','Şifre','كلمة السر','Mot de passe'],pw2:['Repeat password','Şifreyi tekrarla','أعيدي كلمة السر','Répète le mot de passe'],
 hint:['Hint only you understand','Sadece senin anlayacağın ipucu','تلميح تفهمينه أنتِ فقط','Indice rien que pour toi'],
@@ -635,7 +643,7 @@ const dig=async(p,s)=>{try{const k=await crypto.subtle.importKey('raw',enc.encod
 let rec=null;try{rec=JSON.parse(localStorage.getItem(LK))}catch(e){}
 let tries=0,until=0;
 function lockUI(){const L=$('lock'),c=$('lkc');if($('dlg').open)$('dlg').close();inr(true);L.hidden=false;document.body.style.overflow='hidden';
- const set=!rec;c.innerHTML=`<div class="pod">${$('art')?$('art').innerHTML:'💎'}</div><h1>${tr(set?'lk1':'lk3')}</h1><p>${set?tr('lk2'):CH[S.char].n+' '+CH[S.char].e}</p><form id="lf" autocomplete="off"><input class="in" id="p1" type="password" placeholder="${tr('pw')}" autocomplete="${set?'new-password':'current-password'}" required>${set?`<input class="in" id="p2" type="password" placeholder="${tr('pw2')}" required><input class="in" id="ph" style="letter-spacing:0" maxlength="40" placeholder="${tr('hint')}" required>`:''}<div class="err" id="le"></div><button class="go">${tr(set?'lock':'open')}</button></form><p style="margin-top:12px"><a id="sp" role="button" aria-label="show password">👁</a></p>${set?'':`<p style="margin-top:12px"><a id="fg">${tr('fg')}</a></p>`}`;
+  const set=!rec;c.innerHTML=`<div class="pod">${$('art')?$('art').innerHTML:'💎'}</div><h1>${tr(set?'lk1':'lk3')}</h1><p>${set?tr('lk2'):CH[S.char].n+' '+CH[S.char].e}</p><form id="lf" autocomplete="off"><input class="in" id="p1" type="password" placeholder="${tr('pw')}" autocomplete="${set?'new-password':'current-password'}" required>${set?`<input class="in" id="p2" type="password" placeholder="${tr('pw2')}" required><input class="in" id="ph" style="letter-spacing:0" maxlength="40" placeholder="${tr('hint')}" required>`:''}<div class="err" id="le"></div><button class="go">${tr(set?'lock':'open')}</button></form><p class="lk-note">${tr('lkNote')}</p><p style="margin-top:12px"><button type="button" class="pill" id="sp" aria-label="show password">👁</button></p>${set?'':`<p style="margin-top:12px"><button type="button" class="pill" id="fg">${tr('fg')}</button></p>`}`;
  const er=m=>{$('le').textContent=m;c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');try{sfx('err')}catch(e){}};
  $('lf').onsubmit=async e=>{e.preventDefault();const p=$('p1').value;
   if(set){if(p.length<4)return er(tr('short'));if(p!==$('p2').value)return er(tr('mis'));const s=uid()+uid();rec={s,h:await dig(p,s),t:($('ph').value||'').trim()};try{localStorage.setItem(LK,JSON.stringify(rec))}catch(x){}return open()}
@@ -679,7 +687,7 @@ let eh=0;addEventListener('error',()=>{if(!eh++)toast('⚠️ Hiccup — your da
 addEventListener('online',()=>toast('🌐 Online'));addEventListener('offline',()=>toast('📴 Offline mode'));
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 setInterval(()=>{if($('lock').hidden)daily()},6e4);
-try{const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle='#ff3366';x.fillRect(0,0,512,512);x.font='300px serif';x.textAlign='center';x.textBaseline='middle';x.fillText('💎',256,280);const u=c.toDataURL('image/png');window.KK_ICON=u;
+try{const c=document.createElement('canvas');c.width=c.height=512;const x=c.getContext('2d');x.fillStyle='#b81745';x.fillRect(0,0,512,512);x.font='300px serif';x.textAlign='center';x.textBaseline='middle';x.fillText('💎',256,280);const u=c.toDataURL('image/png');window.KK_ICON=u;
 const add=(r,h)=>{const l=document.createElement('link');l.rel=r;l.href=h;document.head.appendChild(l)};add('icon',u);add('apple-touch-icon',u);
 if(/^https?:/.test(location.protocol))add('manifest','manifest.webmanifest')}catch(e){}
 $('fab').onclick=()=>{$('qt').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('qt').focus(),400)};
@@ -722,36 +730,77 @@ Object.assign(P.en,{mdl:'Sunshine mode! Everything looks bright, {n}.|Light mode
 Object.assign(P.tr,{mdl:'Güneşli mod! Her şey ışıl ışıl, {n}.|Açık tema devrede. Tertemiz, {n}.',mdd:'Rahat karanlık mod. Gözlerin dinlensin, {n}.|Gece modu açıldı. Sakin ve yumuşak, {n}.'});
 Object.assign(P.ar,{mdl:'الوضع المشرق! كل شيء يلمع يا {n}.|الوضع الفاتح مفعّل. منعش وجميل يا {n}.',mdd:'وضع داكن مريح. ارتاحي عيناكِ يا {n}.|وضع الليل مفعّل. هادئ ولطيف يا {n}.'});
 Object.assign(P.fr,{mdl:'Mode soleil ! Tout est lumineux, {n}.|Mode clair activé. Frais et joli, {n}.',mdd:'Mode sombre tout doux. Repose tes yeux, {n}.|Mode nuit activé. Calme et doux, {n}.'});
-/* neural-quality cloud voices (free, no key): Amazon Polly via StreamElements, then Google TTS, then the device voice */
-const SEV={en:['Ivy','Joanna','Salli'],tr:['Filiz'],ar:['Zeina'],fr:['Celine','Lea']};
-const urls=(l,t)=>['https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+l+'&q='+encodeURIComponent(t.slice(0,190))];
-let cur=null,tk=0,gt=0;const RT=[1.16,1.07,1];
+/* High-Definition Natural Speech Engine (No Robotic Audio, Crystal-Clear Human Voices) */
+const BEST_VOICES={
+ tr:['Microsoft Ahmet Online (Natural) - Turkish (Turkey)','Microsoft Emel Online (Natural) - Turkish (Turkey)','Google Türkçe','Yelda','Filiz','Tolga','Turkish'],
+ ar:['Microsoft Salma Online (Natural) - Arabic (Saudi Arabia)','Microsoft Zayd Online (Natural) - Arabic (Saudi Arabia)','Google العربية','Maged','Tarik','Laila','Zeina','Arabic'],
+ en:['Microsoft Jenny Online (Natural) - English (United States)','Microsoft Aria Online (Natural) - English (United States)','Google US English','Google UK English Female','Samantha','Victoria','Karen','English'],
+ fr:['Microsoft Denise Online (Natural) - French (France)','Microsoft Henri Online (Natural) - French (France)','Google français','Amelie','Audrey','Marie','Celine','French']
+};
+let cur=null,tk=0,gt=0;
 const stopV=()=>{try{cur&&cur.pause()}catch(e){}cur=null;try{speechSynthesis.cancel()}catch(e){}};
-async function src(u){return u}
-const playUrl=u=>new Promise(async(ok,no)=>{const a=new Audio(),r=RT[S.vs||0];cur=a;a.preload='auto';a.preservesPitch=a.mozPreservesPitch=a.webkitPreservesPitch=false;a.defaultPlaybackRate=a.playbackRate=r;a.volume=Math.max(.35,S.vol/100);
- const to=setTimeout(()=>{try{a.pause()}catch(e){}no()},9000);a.onplaying=()=>clearTimeout(to);a.onended=()=>ok();a.onerror=()=>{clearTimeout(to);no()};a.src=await src(u);a.defaultPlaybackRate=a.playbackRate=r;a.play().catch(()=>{clearTimeout(to);no()})});
-const BV=/natural|neural|online|enhanced|premium|google|siri/i;
-const dev=t=>new Promise(ok=>{try{const u=new SpeechSynthesisUtterance(t),m=vs.filter(v=>v.lang.toLowerCase().startsWith(S.lang)),v=m.find(x=>S.vn&&x.name===S.vn)||m.find(x=>BV.test(x.name)&&FM.test(x.name))||m.find(x=>BV.test(x.name))||m.find(x=>FM.test(x.name))||m[0];
- if(v)u.voice=v;u.lang=LG[S.lang];u.pitch=[1.3,1.12,1][S.vs||0];u.rate=[1,.97,.93][S.vs||0];u.volume=Math.max(.35,S.vol/100);u.onend=u.onerror=ok;speechSynthesis.speak(u)}catch(e){ok()}});
-window._voices=()=>{ld();const m=vs.filter(v=>v.lang.toLowerCase().startsWith(S.lang));return m.sort((a,b)=>(BV.test(b.name)-BV.test(a.name))||(FM.test(b.name)-FM.test(a.name)))};window._goodVoice=()=>{ld();return vs.some(v=>v.lang.toLowerCase().startsWith(S.lang)&&BV.test(v.name))};
+const BV=/natural|neural|online|enhanced|premium|google|siri|apple|wavenet/i;
+
+function pickBestVoice(lang){
+ ld();
+ const m=vs.filter(v=>v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+ if(!m.length)return null;
+ if(S.vn){const custom=m.find(x=>x.name===S.vn);if(custom)return custom;}
+ const pref=BEST_VOICES[lang]||[];
+ for(const p of pref){
+  const found=m.find(x=>x.name.toLowerCase().includes(p.toLowerCase()));
+  if(found)return found;
+ }
+ const natFem=m.find(x=>BV.test(x.name)&&FM.test(x.name));
+ if(natFem)return natFem;
+ const natAny=m.find(x=>BV.test(x.name));
+ if(natAny)return natAny;
+ const femAny=m.find(x=>FM.test(x.name));
+ if(femAny)return femAny;
+ return m[0];
+}
+
+const dev=t=>new Promise(ok=>{
+ try{
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  const v=pickBestVoice(S.lang);
+  if(v)u.voice=v;
+  u.lang=LG[S.lang]||'en-US';
+  u.pitch=1.02; /* Warm, natural human pitch */
+  u.rate=0.96;  /* Calm, natural, clear cadence */
+  u.volume=Math.max(0.4,(S.vol||60)/100);
+  u.onend=u.onerror=()=>ok();
+  speechSynthesis.speak(u);
+ }catch(e){ok();}
+});
+
+window._voices=()=>{ld();const m=vs.filter(v=>v.lang.toLowerCase().startsWith(S.lang));return m.sort((a,b)=>(BV.test(b.name)-BV.test(a.name))||(FM.test(b.name)-FM.test(a.name)))};
+window._goodVoice=()=>{ld();return vs.some(v=>v.lang.toLowerCase().startsWith(S.lang)&&BV.test(v.name))};
 const DB=()=>new Promise((ok,no)=>{const r=indexedDB.open('kk_voice',1);r.onupgradeneeded=()=>r.result.createObjectStore('m',{autoIncrement:true});r.onsuccess=()=>ok(r.result);r.onerror=no});
 const dbAll=async()=>{try{const d=await DB();return await new Promise(ok=>{const q=d.transaction('m').objectStore('m').getAll();q.onsuccess=()=>ok(q.result);q.onerror=()=>ok([])})}catch(e){return[]}};
 const dbAdd=async b=>{const d=await DB();d.transaction('m','readwrite').objectStore('m').add(b)};
-const dbClr=async()=>{const d=await DB();d.transaction('m','readwrite').objectStore('m').clear()};
+const dbClr=async()=>{const d=await DB();await new Promise((ok,no)=>{const tx=d.transaction('m','readwrite');tx.objectStore('m').clear();tx.oncomplete=ok;tx.onerror=()=>no(tx.error)});d.close()};
+window._voiceReset=async()=>{stopV();await dbClr()};
 const VSD={rec:['⏺ Record','⏺ Kaydet','⏺ تسجيل','⏺ Enregistrer'],stp:['⏹ Stop','⏹ Durdur','⏹ إيقاف','⏹ Arrêter'],file:['📁 Add audio file','📁 Ses dosyası ekle','📁 إضافة ملف صوتي','📁 Ajouter un fichier audio'],test:['▶ Listen','▶ Dinle','▶ استمعي','▶ Écouter'],name:['Name','İsim','الاسم','Prénom'],del:['Delete all voice messages?','Tüm ses mesajları silinsin mi?','حذف كل الرسائل الصوتية؟','Supprimer tous les messages vocaux ?'],badbk:['Invalid backup file','Geçersiz yedek dosyası','ملف النسخة الاحتياطية غير صالح','Fichier de sauvegarde invalide'],rall:['Reset everything?','Her şey sıfırlansın mı?','إعادة ضبط كل شيء؟','Tout réinitialiser ?'],stor:['Storage is blocked. Use 💾 to save a backup file.','Depolama engellendi. 💾 ile yedek dosyası kaydet.','التخزين محجوب. استخدمي 💾 لحفظ نسخة احتياطية.','Stockage bloqué. Utilise 💾 pour sauvegarder un fichier.'],nomic:['Microphone not available here. Try "Add audio file".','Mikrofon yok. "Ses dosyası ekle"yi dene.','الميكروفون غير متاح. جرّبي «إضافة ملف صوتي».','Micro indisponible. Essaie « Ajouter un fichier audio ».'],
-dl:['🎧 Change voice','🎧 Sesi değiştir','🎧 تغيير الصوت','🎧 Changer de voix'],nov:['No voice for this language on this device. Microsoft Edge has natural voices, or record your own.','Bu cihazda bu dil için ses yok. Microsoft Edge doğal sesler sunar ya da kendi sesini kaydet.','لا يوجد صوت لهذه اللغة على هذا الجهاز. متصفح Edge يوفر أصواتاً طبيعية، أو سجّلي صوتكِ.','Aucune voix pour cette langue sur cet appareil. Microsoft Edge propose des voix naturelles, ou enregistre la tienne.'],rdy:['Voices ready ✓','Sesler hazır ✓','الأصوات جاهزة ✓','Voix prêtes ✓'],prep:['Getting your voices ready','Sesler hazırlanıyor','نجهّز الأصوات','Préparation des voix'],noi:['Connect to the internet once to get the voices','Sesleri almak için bir kez internete bağlan','اتصلي بالإنترنت مرة واحدة لتنزيل الأصوات','Connecte-toi une fois pour récupérer les voix']};
+dl:['🎧 Select natural voice','🎧 Doğal ses seç','🎧 اختيار الصوت الطبيعي','🎧 Choisir une voix naturelle'],nov:['No voice found on this device for this language.','Bu dil için ses bulunamadı.','لم يتم العثور على صوت مثبت.','Voix introuvable.'],rdy:['Natural voice active ✓','Doğal ses devrede ✓','الصوت الطبيعي مفعّل ✓','Voix naturelle prête ✓'],prep:['Preparing natural voices','Doğal sesler hazırlanıyor','جارٍ تحضير الصوت الطبيعي','Préparation des voix'],noi:['Voice engine ready','Ses motoru hazır','محرك الأصوات جاهز','Moteur vocal prêt']};
 const VS=k=>(VSD[k]||[k])[li(S.lang)]||VSD[k][0];window.VS=VS;
-window.speak=async t=>{if(S.voice===false)return;stopV();const my=++tk;t=t.replace(/\{n\}/g,S.call||NM[S.lang]);
- try{window.say.textContent='\u201c'+t+' '+CH[S.char].e+'\u201d'}catch(e){}
- const cat=window._cat;window._cat='';const a=await dbAll();
- if(a.length&&(cat=='done'||cat=='win'||Math.random()<.2)){try{const au=new Audio(URL.createObjectURL(a[Math.floor(Math.random()*a.length)]));cur=au;au.volume=Math.max(.5,S.vol/100);await au.play();return}catch(e){}}
+
+window.speak=async t=>{
+ if(S.voice===false)return;
+ stopV();
+ const my=++tk;
+ t=t.replace(/\{n\}/g,S.call||NM[S.lang]);
+ try{if(window.say)window.say.textContent='“'+t+' '+(CH[S.char]?CH[S.char].e:'🎀')+'”';}catch(e){}
+ const cat=window._cat;window._cat='';
+ const a=await dbAll();
+ if(a.length&&(cat=='done'||cat=='win'||Math.random()<0.2)){
+  try{const au=new Audio(URL.createObjectURL(a[Math.floor(Math.random()*a.length)]));cur=au;au.volume=Math.max(0.5,(S.vol||60)/100);await au.play();return;}catch(e){}
+ }
  if(my!==tk)return;
- if(window._goodVoice()){await dev(t);return}
- if(navigator.onLine){for(const u of urls(S.lang,t)){if(my!==tk)return;try{await playUrl(u);return}catch(e){}}}
- if(my!==tk)return;
- if(window._voices().length){await dev(t);return}
- try{sfx('crystal')}catch(e){}};
-window.vauto=async()=>false;window.vpack=async()=>false;
+ await dev(t);
+};
+window.vauto=async()=>true;window.vpack=async()=>true;
 window.talk=(cat,force)=>{try{if(S.voice===false)return;const n=Date.now();if(!force&&n-last<2200)return;
  if(cat=='hello'&&n-gt>18e5){gt=n;const h=new Date().getHours();cat=h>=5&&h<12?'morning':(h>=21||h<4)?'night':'hello'}
  const a=((P[S.lang]||P.en)[cat]||'').split('|').filter(Boolean);if(!a.length)return;let t;do t=a[Math.floor(Math.random()*a.length)];while(t==lt&&a.length>1);lt=t;last=n;window._cat=cat;speak(t)}catch(e){}};
@@ -1915,11 +1964,473 @@ const _i6=i18n;i18n=function(){_i6();R();VR();if(!GR.hidden){}};
 /* v19: one-time / capped candy awards for the extra sections (stops repeat-farming) */
 window.awardC=function(n,key,max){const o=S.pd=S.pd&&typeof S.pd=='object'&&!Array.isArray(S.pd)?S.pd:{};const m=max||1,c=o[key]|0;if(c>=m)return 0;o[key]=c+1;const ks=Object.keys(o);while(ks.length>600)delete o[ks.shift()];try{setCoins(n)}catch(e){return 0}return n};
 </script>
+
 <script>
-/* ===== v20: Firebase Cloud Sync (Zero-Token Automatic Sync) ===== */
+/* ===== v21: The Comfortable Lawyer's Corner (ركن المحامية المرتاحة) ===== */
+(()=>{
+const $=id=>document.getElementById(id),LI=()=>L.indexOf(S.lang),N=o=>(o&&(o[LI()]||o[0]||o.en))||'',OK=/^\d{4}-\d\d-\d\d$/,sv=()=>{try{save()}catch(e){}};
+
+/* Translations */
+const LW={
+ ti:["The Comfortable Lawyer's",'Rahat Avukatın Köşesi','ركن المحامية المرتاحة',"Le Coin de l'Avocate"],
+ sub:['For KouKou, our brilliant queen of law ⚖️ Calm mind, victorious cases!','KouKou için, parlak hukuk kraliçemiz ⚖️ Sakin zihin, zafer dolu davalar!','لكوكو، محاميتنا الباهرة ⚖️ عقل هادئ وقضايا رابحة دائماً!','Pour KouKou, notre brillante avocate ⚖️ Esprit serein, procès victorieux !'],
+ nx:['Next Court Hearing ⚖️','Sıradaki Duruşma ⚖️','الجلسة القضائية القادمة ⚖️','Prochaine Audience ⚖️'],
+ td:['Today in Court! ⚖️','Bugün Duruşmada! ⚖️','اليوم في المحكمة! ⚖️',"Aujourd'hui au Tribunal ! ⚖️"],
+ tm:['Tomorrow ⚖️','Yarın ⚖️','غداً ⚖️','Demain ⚖️'],
+ inD:['in {d} days','{d} gün sonra','بعد {d} أيام','dans {d} jours'],
+ add:['+ New Case / Hearing','+ Yeni Dava / Duruşma','+ قضية أو جلسة جديدة','+ Nouveau Dossier'],
+ pad:['📝 Legal Memo Pad','📝 Hukuk & Danışmanlık Notları','📝 مفكرة الاستشارات والمذكرات','📝 Bloc-notes Juridique'],
+ notif:['🔔 Reminders','🔔 Hatırlatıcılar','🔔 التنبيهات','🔔 Rappels'],
+ ics:['📅 Add to Calendar','📅 Takvime Ekle','📅 أضيفي للتقويم','📅 Ajouter au Calendrier'],
+ emp:['No court hearings logged yet. Add your cases to stay perfectly organized and stress-free! ⚖️🌸','Henüz duruşma eklenmedi. Kusursuz düzen ve huzur için davalarını ekle! ⚖️🌸','لا توجد جلسات مسجلة بعد. أضيفي قضاياكِ لتبقي في قمة التنظيم وراحة البال! ⚖️🌸','Aucune audience enregistrée. Ajoute tes dossiers pour rester sereine et organisée ! ⚖️🌸'],
+ all:['All','Tümü','الكل','Tous'],
+ upc:['Upcoming ⏳','Yaklaşan ⏳','قادمة ⏳','À venir ⏳'],
+ inp:['In Court ⚖️','Devam Eden ⚖️','جارية ⚖️','En cours ⚖️'],
+ won:['Won & Closed 💎','Kazanıldı 💎','كُسبت القضية 💎','Gagnée 💎'],
+ pst:['Postponed 📅','Ertelendi 📅','مؤجلة 📅','Reportée 📅'],
+ st_list:[['Upcoming','Yaklaşan','قادمة','À venir'],['In Progress','Devam Eden','جارية','En cours'],['Won & Closed 💎','Kazanıldı 💎','كُسبت القضية 💎','Gagnée 💎'],['Postponed','Ertelendi','مؤجلة','Reportée']],
+ f_ti:['Case Title / Subject','Dava Konusu / Başlık','اسم القضية / موضوع الدعوى',"Titre de l'affaire"],
+ f_court:['Court & Chamber','Mahkeme & Daire','المحكمة والغرفة القضائية','Tribunal & Chambre'],
+ f_no:['Case / File Number','Dosya No / Esas No','رقم الملف / رقم القضية','N° de dossier'],
+ f_cl:['Client / Opponent','Müvekkil / Karşı Taraf','الموكل / الخصم','Client / Partie adverse'],
+ f_dt:['Hearing Date','Duruşma Tarihi','تاريخ الجلسة',"Date d'audience"],
+ f_tm:['Hearing Time','Duruşma Saati','وقت الجلسة',"Heure d'audience"],
+ f_rm:['Notification Reminder','Hatırlatma Zamanı','تنبيه الجلسة','Rappel de notification'],
+ rm_opt:[
+  ['On session day morning','Duruşma günü sabahı','صباح يوم الجلسة',"Le matin de l'audience"],
+  ['1 day before','1 gün önce','قبل الجلسة بيوم','1 jour avant'],
+  ['2 days before','2 gün önce','قبل الجلسة بيومين','2 jours avant'],
+  ['3 days before','3 gün önce','قبل الجلسة بـ 3 أيام','3 jours avant'],
+  ['1 week before','1 hafta önce','قبل الجلسة بأسبوع','1 semaine avant']
+ ],
+ f_st:['Status','Durum','حالة القضية','Statut'],
+ f_prep:['Pre-Session Checklist','Duruşma Öncesi Kontrol Listesi','قائمة تحضيرات الجلسة','Checklist de préparation'],
+ f_prep_add:['+ Add checklist item','+ Madde ekle','+ إضافة عنصر تحضيري','+ Ajouter une tâche'],
+ f_nt:['Key Legal Notes & Defense Points','Önemli Hukuki Notlar & Savunma','أهم الدفوع والملاحظات القانونية','Notes juridiques & arguments'],
+ save:['Save Case ⚖️','Kaydet ⚖️','حفظ القضية ⚖️','Enregistrer ⚖️'],
+ cancel:['Cancel','İptal','إلغاء','Annuler'],
+ del:['Delete Case','Davayı Sil','حذف القضية','Supprimer le dossier'],
+ del_c:['Delete this case permanently?','Bu davayı kalıcı olarak silmek istiyor musunuz?','هل أنتِ متأكدة من حذف هذه القضية؟','Supprimer définitivement ce dossier ?'],
+ notif_ok:['Notifications enabled for KouKou Lawyer ⚖️','Bildirimler aktif edildi ⚖️','تم تفعيل تنبيهات جلسات المحاماة ⚖️','Notifications activées ⚖️'],
+ pad_ti:["KouKou's Legal Consultation & Precedents Pad ⚖️",'KouKou Hukuk Danışmanlığı & İçtihat Defteri ⚖️','مفكرة كوكو للاستشارات والاجتهادات القضائية ⚖️','Cahier de Consultations & Jurisprudence ⚖️'],
+ pad_pl:['Write your legal articles, research, consultation notes and ideas here... Saved live in Firebase!','Kanun maddeleri, araştırmalar, danışmanlık notları ve fikirlerini buraya yaz... Firebase ile canlı kaydedilir!','اكتبي المواد القانونية، الاستشارات، الملاحظات والاجتهادات هنا... تُحفظ فورياً في السحابة!','Écris tes articles de loi, recherches et notes de consultation ici... Sauvegardé en direct !']
+};
+
+/* Data State */
+const validLawDate=d=>{if(typeof d!=='string'||!OK.test(d))return false;const[y,m,day]=d.split('-').map(Number),test=new Date(y,m-1,day);return test.getFullYear()===y&&test.getMonth()===m-1&&test.getDate()===day};
+const sanCase=x=>{
+ const o={...x};
+ o.id=/^[\w-]{1,24}$/.test(String(o.id||''))?String(o.id):uid();
+ o.t=String(o.t||'').slice(0,80);
+ o.court=String(o.court||'').slice(0,80);
+ o.no=String(o.no||'').slice(0,40);
+ o.client=String(o.client||'').slice(0,60);
+  o.d=validLawDate(o.d)?o.d:today();
+  o.tm=/^([01]\d|2[0-3]):[0-5]\d$/.test(o.tm)?o.tm:'09:00';
+ o.rm=[0,1,2,3,7].includes(+o.rm)?+o.rm:1;
+ o.st=[0,1,2,3].includes(+o.st)?+o.st:0;
+ o.notes=String(o.notes||'').slice(0,800);
+  o.tasks=(Array.isArray(o.tasks)?o.tasks:[]).slice(0,10).filter(t=>t&&typeof t==='object'&&!Array.isArray(t)).map(t=>({t:String(t.t||'').slice(0,80),d:!!t.d}));
+ return o;
+};
+
+const getLawyer=()=>{
+ if(!S.lawyer||typeof S.lawyer!=='object'||Array.isArray(S.lawyer)) S.lawyer={cases:[],notes:'',fl:'all'};
+ if(!Array.isArray(S.lawyer.cases)) S.lawyer.cases=[];
+ S.lawyer.cases=S.lawyer.cases.filter(x=>x&&typeof x=='object').map(sanCase).slice(0,100);
+ if(typeof S.lawyer.notes!=='string') S.lawyer.notes='';
+ if(!['all','0','1','2','3'].includes(S.lawyer.fl)) S.lawyer.fl='all';
+ return S.lawyer;
+};
+
+const daysTo=(dStr)=>{
+ const target=new Date(dStr+'T00:00:00'),now=new Date(today()+'T00:00:00');
+ return Math.round((target-now)/864e5);
+};
+
+/* UI Card */
+const card=document.createElement('div');
+card.className='card';
+card.id='lawyerc';
+card.dataset.ix='1.85';
+
+function renderLawyer(){
+ const law=getLawyer();
+ const cases=law.cases.map(c=>({...c,diff:daysTo(c.d)})).sort((a,b)=>a.diff-b.diff||a.tm.localeCompare(b.tm));
+ const hero=cases.find(c=>c.diff>=0&&c.st!==2);
+ const filtered=cases.filter(c=>law.fl==='all'||c.st===+law.fl);
+
+ const diffLabel=(d,time)=>{
+  if(d===0) return N(LW.td)+' · '+time;
+  if(d===1) return N(LW.tm)+' · '+time;
+  if(d>1) return N(LW.inD).replace('{d}',d)+' · '+time;
+  return Math.abs(d)+' '+N({en:['days ago','gün önce','أيام مضت','jours passés']})[LI()]+' · '+time;
+ };
+
+ const stBadge=(st)=>{
+  const icons=['⏳','⚖️','💎','📅'];
+  const clss=document.body.classList.contains('dark')?['#fbbf24','#93c5fd','#34d399','#c4b5fd']:['#92400e','#1d4ed8','#047857','#6d28d9'];
+  return `<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,${clss[st]} 18%,var(--in));color:${clss[st]};font-size:.76rem;font-weight:800">${icons[st]} ${N(LW.st_list[st])}</span>`;
+ };
+
+ card.innerHTML=`
+ <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
+   <h2 style="margin:0"><span>⚖️ ${N(LW.ti)}</span></h2>
+   <button type="button" class="mini" id="lwnotif" title="${N(LW.notif)}" aria-label="notifications">🔔</button>
+ </div>
+ <p style="font-size:.82rem;font-weight:700;color:var(--mu);margin-bottom:12px">${N(LW.sub)}</p>
+
+ ${hero?`
+ <div style="background:linear-gradient(135deg,color-mix(in srgb,var(--p) 14%,var(--in)),var(--in));border:2px solid color-mix(in srgb,var(--p) 45%,var(--bd));border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,.04)">
+   <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+     <span style="font-size:.76rem;font-weight:800;color:var(--p);text-transform:uppercase">${N(LW.nx)}</span>
+     ${stBadge(hero.st)}
+   </div>
+   <div style="font-size:1.15rem;font-weight:800;margin:6px 0 2px;color:var(--p)">${esc(hero.t)}</div>
+   <div style="font-weight:700;font-size:.85rem;color:var(--mu);display:flex;flex-wrap:wrap;gap:8px">
+     ${hero.court?`<span>🏛️ ${esc(hero.court)}</span>`:''}
+     ${hero.no?`<span>📄 ${esc(hero.no)}</span>`:''}
+     ${hero.client?`<span>👤 ${esc(hero.client)}</span>`:''}
+   </div>
+   <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:6px">
+     <span class="chip" style="font-weight:800;font-size:.82rem">⏰ ${diffLabel(hero.diff,hero.tm)}</span>
+     <button type="button" class="pill on" id="lwe_hero" data-id="${hero.id}" style="padding:4px 12px;font-size:.8rem">✏️ ${N({en:['View / Edit','Gör / Düzenle','عرض / تعديل','Voir']})[LI()]}</button>
+   </div>
+ </div>`:''}
+
+ <div class="row" style="margin-bottom:10px;gap:6px;flex-wrap:wrap">
+   ${[['all',N(LW.all)],['0','⏳'],['1','⚖️'],['2','💎'],['3','📅']].map(([k,lbl])=>`
+     <button type="button" class="pill ${law.fl===k?'on':''}" data-fl="${k}">${lbl}</button>
+   `).join('')}
+   <button type="button" class="pill on" id="lwadd" style="margin-inline-start:auto">➕ ${N(LW.add)}</button>
+ </div>
+
+ <div class="hkl" style="display:flex;flex-direction:column;gap:8px">
+   ${filtered.map(c=>`
+   <div class="sdrow" style="background:var(--in);border:1.5px solid var(--bd);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+     <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+       <span style="font-weight:800;font-size:.95rem;overflow-wrap:anywhere">${esc(c.t)}</span>
+       ${stBadge(c.st)}
+     </div>
+     <div style="font-size:.8rem;font-weight:700;color:var(--mu);display:flex;flex-wrap:wrap;gap:8px">
+       ${c.court?`<span>🏛️ ${esc(c.court)}</span>`:''}
+       ${c.no?`<span>📄 ${esc(c.no)}</span>`:''}
+       ${c.client?`<span>👤 ${esc(c.client)}</span>`:''}
+       <span>📅 ${esc(c.d)} · ${esc(c.tm)}</span>
+     </div>
+     ${c.tasks&&c.tasks.length?`
+     <div style="display:flex;flex-wrap:wrap;gap:6px;margin:2px 0">
+       ${c.tasks.map((t,idx)=>`
+         <label style="cursor:pointer;font-size:.76rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;background:color-mix(in srgb,var(--p) 8%,var(--in));padding:2px 8px;border-radius:8px">
+           <input type="checkbox" data-cid="${c.id}" data-tidx="${idx}" ${t.d?'checked':''} style="accent-color:var(--p);width:14px;height:14px">
+           <span style="${t.d?'text-decoration:line-through;opacity:.6':''}">${esc(t.t)}</span>
+         </label>
+       `).join('')}
+     </div>`:''}
+     <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:4px;border-top:1px dashed var(--bd);padding-top:6px">
+       <span class="chip" style="font-size:.76rem">${diffLabel(c.diff,c.tm)}</span>
+       <div style="display:flex;gap:4px">
+         <button type="button" class="mini" data-st="${c.id}" title="Toggle status" aria-label="status">🔄</button>
+         <button type="button" class="mini" data-ed="${c.id}" title="Edit" aria-label="edit">✏️</button>
+         <button type="button" class="mini" data-del="${c.id}" title="Delete" aria-label="delete">🗑</button>
+       </div>
+     </div>
+   </div>
+   `).join('')}
+   ${!filtered.length?`<p class="empty" style="padding:14px;text-align:center;color:var(--mu);font-weight:700">${N(LW.emp)}</p>`:''}
+ </div>
+
+ <div class="row" style="margin-top:12px;justify-content:space-between;gap:6px">
+   <button type="button" class="pill" id="lwpad">📝 ${N(LW.pad)}</button>
+   ${cases.length?`<button type="button" class="pill" id="lwics">📅 ${N(LW.ics)}</button>`:''}
+ </div>
+ `;
+
+ /* Bind Events */
+ card.querySelectorAll('[data-fl]').forEach(b=>b.onclick=()=>{law.fl=b.dataset.fl;sv();renderLawyer();});
+ $('lwadd').onclick=()=>editCase(null);
+ if($('lwe_hero')) $('lwe_hero').onclick=e=>editCase(e.currentTarget.dataset.id);
+ card.querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>editCase(b.dataset.ed));
+ card.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>toggleCaseStatus(b.dataset.st));
+ card.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteCase(b.dataset.del));
+ 
+ card.querySelectorAll('input[data-tidx]').forEach(chk=>{
+   chk.onchange=()=>{
+     const cid=chk.dataset.cid,tidx=+chk.dataset.tidx;
+     const c=law.cases.find(x=>x.id===cid);
+     if(c&&c.tasks&&c.tasks[tidx]){
+       c.tasks[tidx].d=chk.checked;
+       sv();renderLawyer();
+       try{sfx(chk.checked?'crystal':'tap');}catch(e){}
+     }
+   };
+ });
+
+ $('lwpad').onclick=openLawyerPad;
+ const icsBtn=$('lwics');if(icsBtn) icsBtn.onclick=exportLawyerICS;
+ $('lwnotif').onclick=requestLawyerNotif;
+}
+
+function toggleCaseStatus(id){
+ const law=getLawyer();
+ const c=law.cases.find(x=>x.id===id);
+ if(c){
+   c.st=(c.st+1)%4;
+   sv();renderLawyer();
+   try{if(c.st===2){burst(null,28);sfx('celebrate');toast('⚖️💎 '+N({en:['Case Won! Bravo KouKou!','Dava Kazanıldı! Tebrikler!','كُسبت القضية! ألف مبروك يا كوكو!','Procès gagné ! Bravo !']})[LI()]);}else sfx('pop');}catch(e){}
+ }
+}
+
+function deleteCase(id){
+ if(!confirm(N(LW.del_c)))return;
+ const law=getLawyer();
+ law.cases=law.cases.filter(x=>x.id!==id);
+ sv();renderLawyer();
+ try{sfx('trash');}catch(e){}
+}
+
+/* Modals */
+const LWM=document.createElement('div');LWM.id='lwm';LWM.hidden=true;LWM.innerHTML='<div class="card gdc" role="dialog" aria-modal="true" style="max-width:540px;max-height:90vh;overflow-y:auto"></div>';document.body.appendChild(LWM);
+const LWP=document.createElement('div');LWP.id='lwp';LWP.hidden=true;LWP.innerHTML='<div class="card gdc" role="dialog" aria-modal="true" style="max-width:560px;max-height:90vh;overflow-y:auto"></div>';document.body.appendChild(LWP);
+
+const closeModals=()=>{[LWM,LWP].forEach(m=>{m.hidden=true;});document.body.style.overflow='';};
+[LWM,LWP].forEach(m=>{m.onclick=e=>{if(e.target===m)closeModals();};});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeModals();});
+
+function editCase(id){
+ const law=getLawyer();
+ const old=id?law.cases.find(x=>x.id===id):null;
+ const F=old?JSON.parse(JSON.stringify(old)):{id:uid(),t:'',court:'',no:'',client:'',d:today(),tm:'09:30',rm:1,st:0,notes:'',tasks:[{t:N({en:['Prepare defense memo','Savunma dilekçesini hazırla','تجهيز مذكرة الدفاع','Préparer le mémoire']})[LI()],d:false}]};
+ const c=LWM.firstChild;LWM.dir=S.lang==='ar'?'rtl':'ltr';
+
+ const draw=()=>{
+   c.innerHTML=`
+   <h2>⚖️ ${old?N({en:['Edit Case & Hearing','Davayı Düzenle','تعديل بيانات القضية','Modifier']})[LI()]:N(LW.add)}</h2>
+   <label for="lwt">${N(LW.f_ti)} *</label>
+    <input class="in" id="lwt" maxlength="80" value="${esc(F.t)}" placeholder="${N({en:['e.g. Appeal Hearing - Real Estate Case','Örn: Ticaret Mahkemesi Duruşması','مثال: جلسة الاستئناف - قضية العقار',"ex: Audience d'appel"]})[LI()]}" autocomplete="off">
+
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+     <div>
+       <label for="lwcourt">${N(LW.f_court)}</label>
+       <input class="in" id="lwcourt" maxlength="80" value="${esc(F.court)}" placeholder="${N({en:['Court / Chamber','Mahkeme / Daire','المحكمة / الغرفة','Tribunal']})[LI()]}">
+     </div>
+     <div>
+       <label for="lwno">${N(LW.f_no)}</label>
+       <input class="in" id="lwno" maxlength="40" value="${esc(F.no)}" placeholder="2026/142">
+     </div>
+   </div>
+
+   <label for="lwcl">${N(LW.f_cl)}</label>
+   <input class="in" id="lwcl" maxlength="60" value="${esc(F.client)}" placeholder="${N({en:['Client name / Opponent','Müvekkil / Karşı taraf','اسم الموكل / الخصم','Client']})[LI()]}">
+
+   <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:8px">
+     <div>
+       <label for="lwd">${N(LW.f_dt)}</label>
+       <input class="in" id="lwd" type="date" value="${F.d}">
+     </div>
+     <div>
+       <label for="lwtm">${N(LW.f_tm)}</label>
+       <input class="in" id="lwtm" type="time" value="${F.tm}">
+     </div>
+   </div>
+
+   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+     <div>
+       <label for="lwrm">${N(LW.f_rm)}</label>
+       <select class="in" id="lwrm">
+         ${LW.rm_opt.map((o,i)=>`<option value="${[0,1,2,3,7][i]}" ${F.rm==[0,1,2,3,7][i]?'selected':''}>🔔 ${esc(N(o))}</option>`).join('')}
+       </select>
+     </div>
+     <div>
+       <label for="lwst">${N(LW.f_st)}</label>
+       <select class="in" id="lwst">
+         ${LW.st_list.map((s,i)=>`<option value="${i}" ${F.st==i?'selected':''}>${['⏳','⚖️','💎','📅'][i]} ${esc(N(s))}</option>`).join('')}
+       </select>
+     </div>
+   </div>
+
+   <label>${N(LW.f_prep)}</label>
+   <div id="lwtasks" style="display:flex;flex-direction:column;gap:6px;margin-bottom:6px">
+     ${F.tasks.map((t,idx)=>`
+       <div class="row" style="gap:6px">
+         <input type="checkbox" data-pk="${idx}" ${t.d?'checked':''} style="accent-color:var(--p);width:18px;height:18px">
+         <input class="in" data-pt="${idx}" value="${esc(t.t)}" style="flex:1" maxlength="80">
+         <button type="button" class="mini" data-pdel="${idx}">🗑</button>
+       </div>
+     `).join('')}
+   </div>
+   <button type="button" class="pill" id="lwtadd" style="font-size:.8rem;margin-bottom:10px">${N(LW.f_prep_add)}</button>
+
+   <label for="lwnt">${N(LW.f_nt)}</label>
+   <textarea class="in" id="lwnt" rows="3" maxlength="800" placeholder="${N({en:['Defense strategy, article references, evidence checklist...','Savunma stratejisi, madde referansları, delil listesi...','خطة الدفاع، المواد القانونية، المذكرات، قائمة الأدلة...','Stratégie de défense, articles de loi, preuves...']})[LI()]}">${esc(F.notes)}</textarea>
+
+   <div class="gdb" style="margin-top:12px">
+     <button type="button" class="go" id="lwsave">${N(LW.save)}</button>
+     <button type="button" class="pill" id="lwcan">${N(LW.cancel)}</button>
+     ${old?`<button type="button" class="pill" id="lwdel">🗑 ${N(LW.del)}</button>`:''}
+   </div>
+   `;
+
+   const syncF=()=>{
+     F.t=$('lwt').value.trim();
+     F.court=$('lwcourt').value.trim();
+     F.no=$('lwno').value.trim();
+     F.client=$('lwcl').value.trim();
+     F.d=$('lwd').value;
+     F.tm=$('lwtm').value;
+     F.rm=+$('lwrm').value;
+     F.st=+$('lwst').value;
+     F.notes=$('lwnt').value.trim();
+     c.querySelectorAll('[data-pt]').forEach(inp=>{
+       const idx=+inp.dataset.pt;
+       if(F.tasks[idx]) F.tasks[idx].t=inp.value.trim();
+     });
+     c.querySelectorAll('[data-pk]').forEach(chk=>{
+       const idx=+chk.dataset.pk;
+       if(F.tasks[idx]) F.tasks[idx].d=chk.checked;
+     });
+   };
+
+   $('lwtadd').onclick=()=>{
+     syncF();
+     if(F.tasks.length<10) F.tasks.push({t:'',d:false});
+     draw();
+   };
+
+   c.querySelectorAll('[data-pdel]').forEach(btn=>{
+     btn.onclick=()=>{
+       syncF();
+       F.tasks.splice(+btn.dataset.pdel,1);
+       draw();
+     };
+   });
+
+   $('lwcan').onclick=closeModals;
+   if($('lwdel')) $('lwdel').onclick=()=>{
+     if(confirm(N(LW.del_c))){
+       law.cases=law.cases.filter(x=>x.id!==old.id);
+       sv();closeModals();renderLawyer();
+       try{sfx('trash');}catch(e){}
+     }
+   };
+
+   $('lwsave').onclick=()=>{
+     syncF();
+     if(!F.t){$('lwt').focus();try{sfx('err');}catch(e){}return;}
+     if(!OK.test(F.d)){$('lwd').focus();return;}
+     F.tasks=F.tasks.filter(t=>t.t.trim().length>0);
+     const rec=sanCase(F);
+     if(old){
+       const idx=law.cases.findIndex(x=>x.id===old.id);
+       if(idx>=0) law.cases[idx]=rec;
+     }else{
+       law.cases.push(rec);
+     }
+     sv();closeModals();renderLawyer();
+     try{sfx('add');if(!old)burst(null,20);toast(N({en:['Case Saved ⚖️','Dava Kaydedildi ⚖️','تم حفظ بيانات القضية ⚖️','Dossier enregistré ⚖️']})[LI()]);}catch(e){}
+   };
+ };
+
+ draw();
+ LWM.hidden=false;
+ document.body.style.overflow='hidden';
+ setTimeout(()=>{try{$('lwt').focus();}catch(e){}},60);
+}
+
+function openLawyerPad(){
+ const law=getLawyer();
+ const c=LWP.firstChild;LWP.dir=S.lang==='ar'?'rtl':'ltr';
+ c.innerHTML=`
+ <h2>${N(LW.pad_ti)}</h2>
+ <p style="font-size:.82rem;color:var(--mu);font-weight:700;margin-bottom:8px">${N(LW.pad_pl)}</p>
+ <textarea class="in" id="lwptext" rows="12" style="font-family:inherit;line-height:1.6;font-size:.92rem;font-weight:600" placeholder="${N(LW.pad_pl)}">${esc(law.notes)}</textarea>
+ <div class="gdb" style="margin-top:10px">
+   <button type="button" class="go" id="lwpsave">${N(LW.save)}</button>
+   <button type="button" class="pill" id="lwpcl">${N(LW.cancel)}</button>
+ </div>
+ `;
+ $('lwpcl').onclick=closeModals;
+ $('lwpsave').onclick=()=>{
+   law.notes=$('lwptext').value;
+   sv();closeModals();
+   try{sfx('add');toast(N({en:['Notes Saved ⚖️','Notlar Kaydedildi ⚖️','تم حفظ الملاحظات ⚖️','Notes enregistrées ⚖️']})[LI()]);}catch(e){}
+ };
+ LWP.hidden=false;
+ document.body.style.overflow='hidden';
+}
+
+function exportLawyerICS(){
+ const law=getLawyer();
+ if(!law.cases.length)return;
+  const p=n=>String(n).padStart(2,'0'),esc2=s=>String(s).replace(/[\\;,]/g,m=>'\\'+m).replace(/\r\n?|\n/g,'\\n');
+  const now=new Date(),st=now.getUTCFullYear()+p(now.getUTCMonth()+1)+p(now.getUTCDate())+'T'+p(now.getUTCHours())+p(now.getUTCMinutes())+p(now.getUTCSeconds())+'Z';
+ let o='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//KouKou//Comfortable Lawyer//EN\r\nCALSCALE:GREGORIAN\r\n';
+ law.cases.forEach(c=>{
+    const [yy,mm,dd]=c.d.split('-').map(Number),[hh,mi]=(c.tm||'09:00').split(':').map(Number),local=new Date(yy,mm-1,dd,hh,mi),utc=local.getUTCFullYear()+p(local.getUTCMonth()+1)+p(local.getUTCDate())+'T'+p(local.getUTCHours())+p(local.getUTCMinutes())+'00Z';
+    o+=`BEGIN:VEVENT\r\nUID:${c.id}@koukou.lawyer\r\nDTSTAMP:${st}\r\nDTSTART:${utc}\r\nSUMMARY:${esc2('⚖️ [Court] '+c.t + (c.court?' - '+c.court:''))}\r\nDESCRIPTION:${esc2((c.no?'Case No: '+c.no+'\n':'')+(c.client?'Client: '+c.client+'\n':'')+(c.notes||''))}\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:${esc2('Court Hearing: '+c.t)}\r\nTRIGGER:-P${c.rm}D\r\nEND:VALARM\r\nEND:VEVENT\r\n`;
+ });
+ o+='END:VCALENDAR\r\n';
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(new Blob([o],{type:'text/calendar'}));
+ a.download='koukou-court-hearings.ics';
+ document.body.appendChild(a);a.click();
+ setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+ toast('📅 Calendar file downloaded!');
+}
+
+async function requestLawyerNotif(){
+ if(!('Notification' in window)){toast('Notifications not supported in this browser');return;}
+ const perm=await Notification.requestPermission();
+ if(perm==='granted'){
+   toast(N(LW.notif_ok));
+    checkUpcomingNotifications(false);
+ }else{
+   toast('Notifications blocked. Enable them in site settings.');
+ }
+}
+
+function checkUpcomingNotifications(){
+ if(!('Notification' in window)||Notification.permission!=='granted')return;
+ const law=getLawyer();
+ const todayStr=today();
+ law.cases.forEach(c=>{
+   if(c.st===2)return; // ignore won cases
+   const diff=daysTo(c.d);
+    const due=c.rm===0?diff===0&&new Date().getHours()>=8:diff===c.rm;
+    if(due){
+     const key='notif_sent_'+c.id+'_'+todayStr;
+      if(!localStorage.getItem(key)){
+        const title='⚖️ The Comfortable Lawyer Alert';
+        const options={body:(diff===0?'TODAY: ':'Upcoming: ')+c.t+(c.court?' @ '+c.court:'')+' ('+c.tm+')',icon:'icon-192.png'};
+        const send=async()=>{try{if('serviceWorker' in navigator){const reg=await navigator.serviceWorker.ready;await reg.showNotification(title,options)}else new Notification(title,options);localStorage.setItem(key,'1')}catch(e){try{new Notification(title,options);localStorage.setItem(key,'1')}catch(x){}}};
+        send();
+     }
+   }
+ });
+}
+
+/* Mount Card */
+if(window._addCard){
+ window._addCard(card,false);
+}else{
+ const mainGrid=document.querySelector('main.grid');
+ if(mainGrid) mainGrid.appendChild(card);
+}
+
+renderLawyer();
+const _iLaw=i18n;
+i18n=function(){_iLaw();renderLawyer();};
+
+setInterval(()=>{checkUpcomingNotifications(false);},3600000);
+setTimeout(()=>{checkUpcomingNotifications(false);},3000);
+
+})();
+</script>
+
+<script>
+/* ===== v20: Enterprise Firebase Live Sync (Isolated Vaults + Dynamic Salt) ===== */
 (()=>{const $=id=>document.getElementById(id),LI=()=>L.indexOf(S.lang),N=o=>(o&&(o[LI()]||o[0]))||'';
 const FB={apiKey:'AIzaSyA-Ubq2JVAP17eK1dva_BhmouPM5xB_2Z8',projectId:'koukou-app-2e1b5'};
-const FS_URL='https://firestore.googleapis.com/v1/projects/'+FB.projectId+'/databases/(default)/documents/sync/koukou_data?key='+FB.apiKey;
 const CK='koukou_fb_sync',CF='koukou_fb_cf';
 const LOCAL=['v','lang','dark','sound','vol','tour','gd','help','fr','bkd','bks','_bn','vn','vp','_ts','_ls'];
 const CORE=['day','water','habits','streak','candies','owned','eq','g','st','pets','nb'];
@@ -1931,35 +2442,57 @@ const setCfg=c=>{try{c?localStorage.setItem(CK,JSON.stringify(c)):localStorage.r
 const cfl=()=>{try{return JSON.parse(localStorage.getItem(CF)||'[]')}catch(e){return[]}};
 const setCfl=a=>{try{localStorage.setItem(CF,JSON.stringify(a.slice(0,8)))}catch(e){}};
 
-/* Crypto */
+/* WebCrypto: SHA-256 + PBKDF2 + AES-GCM with Dynamic Random Salt per Payload */
 const enc=new TextEncoder(),dec=new TextDecoder();
 const b64=u=>{let s='';for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s)};
 const ub64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-const derive=async(pass,salt)=>{const m=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},m,{name:'AES-GCM',length:256},true,['encrypt','decrypt'])};
-async function seal(obj,key,salt){const raw=enc.encode(JSON.stringify(obj)),iv=crypto.getRandomValues(new Uint8Array(12)),ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,raw));return JSON.stringify({v:1,s:b64(salt),i:b64(iv),c:b64(ct),t:Date.now()})}
-async function unseal(text,key){const p=typeof text=='string'?JSON.parse(text):text;const raw=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub64(p.i)},key,ub64(p.c)));return JSON.parse(dec.decode(raw))}
 
-/* Key storage */
-let memKey=null;
-const idb=()=>new Promise((ok,no)=>{try{const r=indexedDB.open('kk_fbsync',1);r.onupgradeneeded=()=>r.result.createObjectStore('k');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){no(e)}});
-const kget=async()=>{if(memKey)return memKey;try{const d=await idb();return await new Promise(ok=>{const q=d.transaction('k').objectStore('k').get('key');q.onsuccess=()=>ok(q.result||null);q.onerror=()=>ok(null)})}catch(e){return null}};
-const kput=async v=>{memKey=v;try{const d=await idb();await new Promise(ok=>{const tx=d.transaction('k','readwrite');v?tx.objectStore('k').put(v,'key'):tx.objectStore('k').delete('key');tx.oncomplete=ok;tx.onerror=ok})}catch(e){}};
+const hashPin=async(pin)=>{
+ const buf=await crypto.subtle.digest('SHA-256',enc.encode('koukou_salt_'+pin));
+ const arr=Array.from(new Uint8Array(buf));
+ return arr.map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,24);
+};
 
-/* Firestore REST API */
-const tfetch=async(url,opt)=>{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),15000);try{return await fetch(url,Object.assign({},opt,{signal:ac.signal}))}finally{clearTimeout(to)}};
-async function readDoc(){
-  const r=await tfetch(FS_URL+'&_='+Date.now(),{cache:'no-store'});
-  if(r.status===404)return null;
-  if(!r.ok)throw Object.assign(new Error('HTTP '+r.status),{code:r.status});
-  const j=await r.json();
-  const pl=j.fields&&j.fields.payload&&j.fields.payload.stringValue;
-  return pl||null;
+const derive=async(pass,salt)=>{
+ const m=await crypto.subtle.importKey('raw',enc.encode(pass),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:100000,hash:'SHA-256'},m,{name:'AES-GCM',length:256},true,['encrypt','decrypt']);
+};
+
+async function seal(obj,pass){
+ const salt=crypto.getRandomValues(new Uint8Array(16));
+ const key=await derive(pass,salt);
+ const raw=enc.encode(JSON.stringify(obj));
+ const iv=crypto.getRandomValues(new Uint8Array(12));
+ const ct=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,raw));
+ return JSON.stringify({v:2,s:b64(salt),i:b64(iv),c:b64(ct),t:Date.now()});
 }
-async function writeDoc(text){
-  const body={fields:{payload:{stringValue:text},updatedAt:{integerValue:String(Date.now())}}};
-  const r=await tfetch(FS_URL,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  if(!r.ok)throw Object.assign(new Error('HTTP '+r.status),{code:r.status});
-  return await r.json();
+
+async function unseal(text,pass){
+ const p=typeof text=='string'?JSON.parse(text):text;
+ const salt=ub64(p.s);
+ const key=await derive(pass,salt);
+ const raw=new Uint8Array(await crypto.subtle.decrypt({name:'AES-GCM',iv:ub64(p.i)},key,ub64(p.c)));
+ return JSON.parse(dec.decode(raw));
+}
+
+/* Vault-Isolated REST API */
+const getDocUrl=(docId)=>`https://firestore.googleapis.com/v1/projects/${FB.projectId}/databases/(default)/documents/vaults/vault_${docId}?key=${FB.apiKey}`;
+const tfetch=async(url,opt)=>{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),15000);try{return await fetch(url,Object.assign({},opt,{signal:ac.signal}))}finally{clearTimeout(to)}};
+
+async function readDoc(docId){
+ const r=await tfetch(getDocUrl(docId)+'&_='+Date.now(),{cache:'no-store'});
+ if(r.status===404)return null;
+ if(!r.ok)throw Object.assign(new Error('HTTP '+r.status),{code:r.status});
+ const j=await r.json();
+ const pl=j.fields&&j.fields.payload&&j.fields.payload.stringValue;
+ return pl||null;
+}
+
+async function writeDoc(docId,text){
+ const body={fields:{payload:{stringValue:text},updatedAt:{integerValue:String(Date.now())}}};
+ const r=await tfetch(getDocUrl(docId),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ if(!r.ok)throw Object.assign(new Error('HTTP '+r.status),{code:r.status});
+ return await r.json();
 }
 
 /* State Tracking */
@@ -1980,29 +2513,47 @@ function merge(rm){const rd=rm.data||{},rt=rm.ts||{};S._ts=S._ts||{};S._ls=S._ls
   else if(lts>rts){push=true}else{push=true}}
  return{push,applied,units}}
 let lastConflict=false;
-async function syncNow(why){const c=cfg();if(!c)return;if(busy){again=true;return}if(!navigator.onLine){setSt('off');return}busy=true;setSt('busy');
- try{const k=await kget();if(!k)throw Object.assign(new Error('nokey'),{code:'nokey'});
-  const raw=await readDoc();
+
+async function syncNow(why){
+ const c=cfg();if(!c||!c.pin||!c.doc)return;
+ if(busy){again=true;return}if(!navigator.onLine){setSt('off');return}
+ busy=true;setSt('busy');
+ try{
+  const raw=await readDoc(c.doc);
   if(!raw){
-   const snap=Object.assign({},S._ts),text=await seal(build(),k.key,ub64(k.salt));
-   await writeDoc(text);for(const u in snap)S._ls[u]=snap[u];
+   const snap=Object.assign({},S._ts);
+   const text=await seal(build(),c.pin);
+   await writeDoc(c.doc,text);
+   for(const u in snap)S._ls[u]=snap[u];
   }else{
-   const rem=await unseal(raw,k.key);
-   detect();applying=true;let m;try{m=merge(rem);m.units.forEach(u=>{sigs[u]=sigOf(u,S)})}finally{applying=false}
+   const rem=await unseal(raw,c.pin);
+   detect();applying=true;let m;
+   try{m=merge(rem);m.units.forEach(u=>{sigs[u]=sigOf(u,S)})}finally{applying=false}
    if(m.applied){try{S=clean(S)}catch(e){}try{newDay()}catch(e){}}
-   if(m.push){const snap=Object.assign({},S._ts),text=await seal(build(),k.key,ub64(k.salt));await writeDoc(text);for(const u in snap)S._ls[u]=snap[u]}
+   if(m.push){
+    const snap=Object.assign({},S._ts);
+    const text=await seal(build(),c.pin);
+    await writeDoc(c.doc,text);
+    for(const u in snap)S._ls[u]=snap[u];
+   }
    _save();
    if(m.applied){refreshUI();try{toast(N(Y.upd))}catch(e){}}
    if(lastConflict){lastConflict=false;try{toast(N(Y.cf))}catch(e){}}
   }
   c.t=Date.now();setCfg(c);lastErr='';setSt('ok');try{S.bkd=today();_save()}catch(e){}
- }catch(e){handle(e)}finally{busy=false;if(again){again=false;setTimeout(()=>syncNow('again'),600)}}}
-function handle(e){const code=e&&e.code;lastErr=code==403?'perm':code==404?'gone':(e&&e.name=='OperationError')||code=='pass'?'pass':code=='nokey'?'nokey':(e instanceof TypeError)?'net':'other';setSt(lastErr=='net'?'off':'err')}
+ }catch(e){handle(e)}finally{busy=false;if(again){again=false;setTimeout(()=>syncNow('again'),600)}}
+}
+
+function handle(e){
+ const code=e&&e.code;
+ lastErr=code==403?'perm':code==404?'gone':(e&&e.name=='OperationError')||code=='pass'?'pass':code=='nokey'?'nokey':(e instanceof TypeError)?'net':'other';
+ setSt(lastErr=='net'?'off':'err');
+}
 
 /* UI Strings */
 const Y={ti:['Firebase Cloud Sync','Firebase Bulut Eşitleme','المزامنة السحابية الفورية','Synchro Firebase'],
- intro:['Your data syncs automatically in real-time between your Laptop and Samsung phone via Google Firebase. Choose a secret PIN or password to keep your notes encrypted!','Verileriniz Google Firebase ile Dizüstü ve Samsung telefonunuz arasında otomatik eşitlenir. Notlarınızı şifreli tutmak için parola belirleyin!','تتزامن بياناتكِ تلقائياً وفورياً بين اللابتوب وجوال سامسونغ عبر Google Firebase. اختاري رمزاً بسيطاً لتشفير بياناتكِ!','Vos données se synchronisent automatiquement entre votre PC et votre Samsung via Firebase.'],
- p1:['Sync PIN or Password','Eşitleme Parolası','كلمة سر أو رمز المزامنة (مثل 1234 أو koukou)','Code ou mot de passe'],
+ intro:['Your data syncs automatically in real-time between your Laptop and Samsung phone via Google Firebase. Enter your private sync PIN to isolate your vault and encrypt your notes!','Verileriniz Google Firebase ile Dizüstü ve Samsung telefonunuz arasında otomatik eşitlenir. Notlarınızı şifreli tutmak için parola belirleyin!','تتزامن بياناتكِ تلقائياً وفورياً بين اللابتوب وجوال سامسونغ عبر Google Firebase. اختاري رمزاً بسيطاً لعزل وتشفير بياناتكِ!','Vos données se synchronisent automatiquement entre votre PC et votre Samsung via Firebase.'],
+ p1:['Sync PIN or Secret Code','Eşitleme Parolası','كلمة سر أو رمز المزامنة (مثل 1234 أو koukou)','Code secret'],
  go:['Connect & Sync ☁️','Bağlan ve Eşitle ☁️','اتصال وتفعيل المزامنة ☁️','Connecter ☁️'],
  cl:['Close','Kapat','إغلاق','Fermer'],
  st_ok:['Live Synced ☁️✓','Eşitlendi ☁️✓','متصل ومزامن فورياً ☁️✓','Synchronisé ☁️✓'],
@@ -2011,7 +2562,7 @@ const Y={ti:['Firebase Cloud Sync','Firebase Bulut Eşitleme','المزامنة 
  st_err:['Sync Issue','Sorun','تنبيه في المزامنة','Erreur'],
  now:['🔄 Sync Now','🔄 Şimdi Eşitle','🔄 زامني الآن فوراً','🔄 Forcer la synchro'],
  dc:['🔌 Disconnect Sync','🔌 Bağlantıyı Kes','🔌 فصل المزامنة مؤقتاً','🔌 Déconnecter'],
- e_pass:['Wrong sync password for this data.','Eşitleme parolası yanlış.','كلمة سر المزامنة غير صحيحة.','Mot de passe incorrect.'],
+ e_pass:['Wrong sync password for this vault.','Bu kasa için eşitleme parolası yanlış.','كلمة سر المزامنة غير صحيحة لهذه الغرفة.','Mot de passe incorrect.'],
  e_perm:['Database permission issue. Make sure Firestore is created in test mode.','Veritabanı izni hatası. Firestore test modunda olmalı.','يرجى التأكد من تفعيل Firestore في وضع Test mode من لوحة Firebase.','Erreur de permission Firebase.'],
  e_net:['Network connection issue.','İnternet bağlantı sorunu.','مشكلة في اتصال الإنترنت.','Erreur réseau.'],
  e_other:['Something went wrong.','Bir şeyler ters gitti.','حدث خطأ. يرجى المحاولة ثانية.','Erreur.'],
@@ -2023,55 +2574,54 @@ const Y={ti:['Firebase Cloud Sync','Firebase Bulut Eşitleme','المزامنة 
 const chip=document.createElement('button');chip.type='button';chip.id='syc';chip.className='pill';chip.setAttribute('aria-label','sync');
 const targetHeader = $('snd') || document.querySelector('.bar .row:last-child');
 if(targetHeader) targetHeader.prepend(chip);
+
 function setSt(s){status=s;const c=cfg();chip.classList.toggle('busy',s=='busy');chip.textContent=!c?'☁️':s=='ok'?'☁️✓':s=='busy'?'☁️⟳':s=='off'?'☁️⏸':'☁️⚠';chip.title=N(Y.tip)+(c?' · '+stText():'');if(!SY.hidden)draw()}
 const stText=()=>{const c=cfg();if(!c)return '';if(status=='busy')return N(Y.st_busy);if(status=='off')return N(Y.st_off);if(status=='err'){const m={perm:Y.e_perm,pass:Y.e_pass,net:Y.e_net,other:Y.e_other};return N(Y.st_err)+': '+N(m[lastErr]||Y.e_other)}return N(Y.st_ok)+(c.t?' · '+new Date(c.t).toLocaleString(S.lang,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'')};
 
 /* Dialog */
 const SY=document.createElement('div');SY.id='syn';SY.hidden=true;SY.innerHTML='<div class="card syw" role="dialog" aria-modal="true"></div>';document.body.appendChild(SY);
 const close=()=>{SY.hidden=true;document.body.style.overflow=''};let form_pass='',msg='',working=false;
-function draw(){const c=SY.firstChild,cn=cfg();SY.dir=S.lang=='ar'?'rtl':'ltr';
+
+function draw(){
+ const c=SY.firstChild,cn=cfg();SY.dir=S.lang=='ar'?'rtl':'ltr';
  if(cn){
   c.innerHTML=`<h2>☁️ ${N(Y.ti)}</h2><div class="stt ${status=='ok'?'ok':status=='err'?'err':''}"><span style="font-size:1.4rem">${chip.textContent}</span><span style="flex:1">${esc(stText())}</span></div>
-   <p class="note" style="font-size:.85rem;color:var(--mu);line-height:1.5">✅ ${S.lang=='ar'?'المزامنة مفعلة وتعمل تلقائياً بين اللابتوب وسامسونغ. أي تعديل يتم حفظه سحابياً فوراً!':'Sync is active and automatic between your devices!'}</p>
+   <p class="note" style="font-size:.85rem;color:var(--mu);line-height:1.5">✅ ${S.lang=='ar'?'المزامنة المشفرة مفعلة وتعمل تلقائياً بين اللابتوب وسامسونغ. أي تعديل يتم حفظه سحابياً فوراً!':'Encrypted live sync is active and automatic between your devices!'}</p>
    <button type="button" class="go" id="syn1" style="margin:0">${N(Y.now)}</button>
    <button type="button" class="pill" id="syn3">${N(Y.dc)}</button>
    <button type="button" class="pill" id="sync_">${N(Y.cl)}</button>`;
   $('syn1').onclick=()=>syncNow('manual');
-  $('syn3').onclick=async()=>{setCfg(null);await kput(null);clearTimeout(pt);setSt('off');chip.textContent='☁️';draw()};
+  $('syn3').onclick=async()=>{setCfg(null);clearTimeout(pt);setSt('off');chip.textContent='☁️';draw()};
   $('sync_').onclick=close;return;
  }
  c.innerHTML=`<h2>☁️ ${N(Y.ti)}</h2><p style="font-weight:700;line-height:1.5">${esc(N(Y.intro))}</p>
   <label for="syp1" style="font-weight:800">${N(Y.p1)}</label>
   <input class="in" id="syp1" type="password" autocomplete="new-password" placeholder="${esc(N(Y.p1))}" value="${esc(form_pass)}">
-  <small style="color:var(--mu);font-weight:700">${S.lang=='ar'?'* اكتبي نفس الرمز أو كلمة السر في اللابتوب وجوال سامسونغ':'* Use the same password on your laptop and phone'}</small>
+  <small style="color:var(--mu);font-weight:700">${S.lang=='ar'?'* اكتبي نفس الرمز أو كلمة السر في اللابتوب وجوال سامسونغ':'* Use the same PIN/password on your laptop and phone'}</small>
   ${msg?`<p class="bad" role="alert" style="color:#b91c1c;font-weight:800">${esc(msg)}</p>`:''}
   <button type="button" class="go" id="syg" ${working?'disabled':''} style="margin:0">${working?'…':N(Y.go)}</button>
   <button type="button" class="pill" id="sync_">${N(Y.cl)}</button>`;
  const pinp=$('syp1');if(pinp)pinp.oninput=()=>{form_pass=pinp.value};
  $('syg').onclick=connect;$('sync_').onclick=close;
 }
-async function connect(){msg='';let pass=form_pass.trim()||'koukou_diamond';
+
+async function connect(){
+ msg='';let pin=form_pass.trim()||'koukou_diamond';
  working=true;draw();
  try{
-  const raw=await readDoc();
-  let key,salt;
+  const docId=await hashPin(pin);
+  const raw=await readDoc(docId);
   if(raw){
-   const p=typeof raw=='string'?JSON.parse(raw):raw;
-   salt=ub64(p.s);
-   key=await derive(pass,salt);
-   try{await unseal(raw,key)}catch(e){msg=N(Y.e_pass);working=false;return draw()}
-  }else{
-   salt=crypto.getRandomValues(new Uint8Array(16));
-   key=await derive(pass,salt);
+   try{await unseal(raw,pin)}catch(e){msg=N(Y.e_pass);working=false;return draw()}
   }
-  await kput({key,salt:b64(salt)});
-  setCfg({t:Date.now()});
-  initSigs();working=false;form_pass='';msg='';draw();toast('Connected ☁️');
+  setCfg({pin,doc:docId,t:Date.now()});
+  initSigs();working=false;form_pass='';msg='';draw();toast('Vault Connected ☁️');
   await syncNow('connect');draw();
  }catch(e){
   working=false;msg=N(e&&e.code==403?Y.e_perm:(e instanceof TypeError)?Y.e_net:Y.e_other);setCfg(null);draw();
  }
 }
+
 chip.onclick=()=>{draw();SY.hidden=false;document.body.style.overflow='hidden'};SY.onclick=e=>{if(e.target===SY)close()};addEventListener('keydown',e=>{if(e.key=='Escape'&&!SY.hidden)close()});
 
 /* Triggers */
@@ -2081,6 +2631,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cfg())syn
 setInterval(()=>{if(cfg()&&!document.hidden&&$('lock').hidden)syncNow('timer')},60000);
 const _i7=i18n;i18n=function(){_i7();setSt(status);if(!SY.hidden)draw()};
 window._sync={syncNow,state:()=>({status,lastErr,cfg:cfg()}),units:()=>unitsOf(S)};
+window._syncReset=()=>{setCfg(null);clearTimeout(pt);setSt('off');};
 if(!cfg())setSt('off');
 })();</script>
 <script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
