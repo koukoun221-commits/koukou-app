@@ -328,6 +328,51 @@ body{overflow-x:clip}
 #syc.busy{animation:sycs 1s linear infinite}@keyframes sycs{50%{opacity:.45}}
 .lkc #sp{min-width:44px;min-height:44px}.lk-note{font-size:.72rem;font-weight:700;color:var(--mu);margin:10px 0;line-height:1.45}
 @media(max-width:600px){.pill{min-height:44px}.ico,.mini{min-width:44px;min-height:44px}.chk{width:44px;height:44px;min-width:44px}input[type=checkbox]{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}.cups button,.am button,.cal button{min-width:44px;min-height:44px}.go,.ayg button,.dpad button,.sdn,.sdmo button,.spd button,.smp,.ts button{min-width:44px;min-height:44px}.wk{gap:4px}.wk button{min-width:44px}}
+
+/* ===== Luxury Sleek Scrollbar System (No Ugly White Bars) ===== */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--p) 45%, transparent) rgba(20, 8, 16, 0.2);
+  background-color: #140810;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(20, 8, 16, 0.15);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--p) 45%, rgba(255, 255, 255, 0.2));
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--p);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+#lock {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--p) 40%, transparent) transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#lock::-webkit-scrollbar {
+  width: 5px;
+}
+#lock::-webkit-scrollbar-track {
+  background: transparent;
+}
+#lock::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--p) 40%, transparent);
+  border-radius: 999px;
+}
+#lock::-webkit-scrollbar-thumb:hover {
+  background: var(--p);
+}
+
 </style>
 </head>
 <body>
