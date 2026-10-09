@@ -61,7 +61,6 @@ label{font-size:.78rem;font-weight:800;color:var(--mu);display:block;margin:8px 
 dialog{margin:auto;border:3px solid var(--p);border-radius:20px;padding:20px;width:min(420px,92vw);background:var(--card);color:var(--tx)}dialog::backdrop{background:rgba(0,0,0,.4);backdrop-filter:blur(4px)}
 #toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center}
 .ts{background:var(--tx);color:var(--in);padding:10px 16px;border-radius:99px;font-weight:700;animation:pop .3s;display:flex;gap:10px;align-items:center}.ts button{background:var(--p);border:none;color:#fff;border-radius:99px;padding:2px 12px}
-#fx{position:fixed;inset:0;pointer-events:none;z-index:9998}
 .b{position:absolute;font-size:1.4rem;animation:fly 1s cubic-bezier(.1,.8,.2,1) forwards}
 @keyframes fly{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.3) rotate(var(--r))}}
 .eyes{animation:bl 5s infinite;transform-origin:50% 55%}@keyframes bl{94%,98%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
@@ -240,7 +239,6 @@ body.dark #cname,body.dark .fr{color:color-mix(in srgb,var(--p) 48%,#fff)!import
 .sdy .t{flex:1;min-width:0}.sdy small{display:block;color:var(--mu)}
 .hjr{display:flex;align-items:center;gap:8px;width:100%;text-align:start;background:var(--in);border:1.5px solid var(--bd);border-radius:12px;padding:8px 12px;font-weight:700;color:var(--tx);min-height:44px}
 /* ===== v13: Special Days ===== */
-#sdc{--r:var(--p)}
 .sdhero{position:relative;border-radius:20px;padding:14px;display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,color-mix(in srgb,var(--p) 26%,var(--in)),color-mix(in srgb,var(--p) 8%,var(--in)));border:2px solid color-mix(in srgb,var(--p) 40%,var(--bd));overflow:hidden}
 .sdhero.today{animation:sdglow 2.4s ease-in-out infinite}@keyframes sdglow{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--p) 25%,transparent),0 0 28px color-mix(in srgb,var(--p) 40%,transparent)}}
 .sdav{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-size:1.9rem;background:var(--in);border:2.5px solid var(--p);overflow:hidden}
@@ -337,7 +335,7 @@ body{overflow-x:clip}
 html, body {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--p) 45%, transparent) rgba(20, 8, 16, 0.2);
-  background-color: #140810;
+  background-color: var(--bg1);
 }
 ::-webkit-scrollbar {
   width: 6px;
@@ -377,6 +375,26 @@ html, body {
   background: var(--p);
 }
 
+/* ===== v22: audit fixes ===== */
+/* [hidden] must always win over any author display rule (fixes the permanent red pill #alrm) */
+[hidden]{display:none!important}
+/* modal cards: solid and readable instead of see-through grey glass */
+body>div[id]>.card[role=dialog]{background:var(--in)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:1.5px solid var(--bd)!important;box-shadow:0 24px 60px -20px rgba(0,0,0,.55)}
+#gd,#ap,#rm,#vsd,#hjo,#sdm,#sdgf,#sdw,#kkp,#rcp,#spl,#bkn,#grd,#syn,#lwm,#lwp{-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* button rows inside modals: equal heights, no stray top margin */
+.gdb{align-items:stretch}
+.gdb>button{margin:0;width:auto;min-height:44px}
+/* pills centre their content (min-height pills used to top-align the text) */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:.3em}
+/* flex/grid children may shrink: stops long French/Turkish labels and date/time inputs overflowing */
+.in{min-width:0;max-width:100%}
+[style*="grid-template-columns"]>*{min-width:0}
+/* checkboxes: normal size, brand colour; the big tap area comes from the label row */
+input[type=checkbox]{accent-color:var(--p)}
+label:has(>input[type=checkbox]){min-height:44px;display:flex;align-items:center;gap:10px;cursor:pointer}
+@media(max-width:600px){input[type=checkbox]{width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;flex:none}}
+/* special days: finished one-time events */
+.sdrow.past{opacity:.65}
 </style>
 </head>
 <body>
@@ -609,7 +627,7 @@ function i18n(){const d=S.lang=='ar';document.body.classList.toggle('ar',d);docu
  say_();rank();renderAll()}
 function setLang(l){S.lang=l;save();i18n();sfx('tap')}
 let flt_='all';function fltR(){flt.innerHTML=[['all','all'],['pend','pending'],['fin','finished']].map(f=>`<button class="pill ${flt_==f[1]?'on':''}" onclick="flt_='${f[1]}';fltR();renderQuests();sfx('tap')">${tr(f[0])}</button>`).join('')}
-function editNick(){form('✏️',[{k:'n',l:tr('name'),v:S.nick}],o=>{S.nick=o.n.trim().slice(0,40)||S.nick;save();i18n()})}
+function editNick(){form('✏️',[{k:'n',l:['App name','Uygulama adı','اسم التطبيق','Nom de l\'app'][li(S.lang)]||'App name',v:S.nick}],o=>{S.nick=o.n.trim().slice(0,40)||S.nick;save();i18n()})}
 function renderAll(){mjRender();renderAmb();renderQuests();renderHabits();renderCups();renderShop();moodsR();badges();exam();window.note.value=S.notes[today()]||'';strk.textContent=S.streak.n}
 /* quests */
 function addQuest(e){e.preventDefault();const t=qt.value.trim();if(!t)return sfx('err');S.quests.unshift({id:uid(),t,c:+qc.value,p:+qp.value,d:qd.value,done:false});qt.value='';qd.value='';save();renderQuests();sfx('add')}
@@ -740,7 +758,7 @@ try{const c=document.createElement('canvas');c.width=c.height=512;const x=c.getC
 const add=(r,h)=>{const l=document.createElement('link');l.rel=r;l.href=h;document.head.appendChild(l)};add('icon',u);add('apple-touch-icon',u);
 if(/^https?:/.test(location.protocol))add('manifest','manifest.webmanifest')}catch(e){}
 $('fab').onclick=()=>{$('qt').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>$('qt').focus(),400)};
-S.g=S.g||{};gR();try{localStorage.removeItem('koukou_nolock')}catch(x){}lockUI();
+S.g=S.g||{};window.gR=gR;gR();try{localStorage.removeItem('koukou_nolock')}catch(x){}lockUI();
 })();
 </script>
 <script>
@@ -1360,7 +1378,7 @@ let gl=0;const gd=document.createElement('div');gd.id='gd';gd.hidden=true;gd.inn
 function G(){const h=HT[gl]||HT[0],c=gd.firstChild;gd.dir=gl==2?'rtl':'ltr';
  c.innerHTML=`<div class="row" style="justify-content:center">${L.map((l,i)=>`<button type="button" class="pill ${i==gl?'on':''}" data-g="${i}" aria-label="${l}">${FLAGS[l]} ${l.toUpperCase()}</button>`).join('')}</div><h2 id="gdt">❓ ${esc(h[0])}</h2><ol>${h.slice(1).concat(GT.jb[gl]).map(x=>`<li>${esc(x)}</li>`).join('')}</ol><div class="gdb"><button type="button" class="pill" id="gdl">${GT.lt[gl]}</button><button type="button" class="go" id="gdn">${GT.nv[gl]}</button></div>`;
  c.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{gl=+b.dataset.g;G()});$('gdl').onclick=()=>close(1);$('gdn').onclick=()=>close(2);}
-function show(){gl=Math.max(0,L.indexOf(S.lang));G();gd.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>{try{$('gdl').focus()}catch(e){}},30)}
+function show(){gl=Math.max(0,L.indexOf(S.lang));G();gd.hidden=false;document.body.style.overflow='hidden';setTimeout(()=>{try{$('gdl').focus({preventScroll:true})}catch(e){}},30)}
 function close(m){gd.hidden=true;document.body.style.overflow='';if(m==1){try{sessionStorage.setItem(GK,'1')}catch(e){}toast(GT.lm[gl])}if(m==2){S.gd='never';save();toast(GT.nm[gl])}}
 addEventListener('keydown',e=>{if(e.key=='Escape'&&!gd.hidden)close(1)});
 window.openGuide=show;
@@ -1416,7 +1434,7 @@ function drawAp(){const a=ap(),c=P.firstChild;P.dir=S.lang=='ar'?'rtl':'ltr';
  c.querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{a.bg=b.dataset.b;save();paintAp();drawAp();sfx('tap')});
  $('gls').oninput=e=>{a.ga=e.target.value/100;document.documentElement.style.setProperty('--ga',a.ga)};$('gls').onchange=()=>save();
  $('apvs').onclick=()=>{closeAp();if(window.openVoiceStyle)window.openVoiceStyle()};$('aprs').onclick=()=>{a.bg='auto';a.ga=.74;save();paintAp();drawAp()};$('apok').onclick=closeAp}
-const openAp=()=>{drawAp();P.hidden=false;document.body.style.overflow='hidden';$('apok').focus()},closeAp=()=>{P.hidden=true;document.body.style.overflow=''};
+const openAp=()=>{drawAp();P.hidden=false;document.body.style.overflow='hidden';$('apok').focus({preventScroll:true})},closeAp=()=>{P.hidden=true;document.body.style.overflow=''};
 P.onclick=e=>{if(e.target===P)closeAp()};addEventListener('keydown',e=>{if(e.key=='Escape'&&!P.hidden)closeAp()});
 const mk=(lab,txt,fn)=>{const b=document.createElement('button');b.className='ico';b.textContent=txt;b.setAttribute('aria-label',lab);b.onclick=fn;return b};
 const jbn=document.querySelector('[aria-label="job finder"]');
@@ -1596,7 +1614,7 @@ function EC(){const x=S.exam||{};ec.classList.remove('soon');if(!x.d){ec.textCon
 wrap('exam',null,EC);EC();
 /* ---- overlays ---- */
 function ov(id){const e=document.createElement('div');e.id=id;e.hidden=true;e.innerHTML='<div class="card gdc" role="dialog" aria-modal="true"></div>';document.body.appendChild(e);e.onclick=ev=>{if(ev.target===e)cl(e)};return e}
-const cl=e=>{e.hidden=true;document.body.style.overflow=''},op=e=>{e.dir=S.lang=='ar'?'rtl':'ltr';e.hidden=false;document.body.style.overflow='hidden';const b=e.querySelector('button.go,button');if(b)b.focus()};
+const cl=e=>{e.hidden=true;document.body.style.overflow=''},op=e=>{e.dir=S.lang=='ar'?'rtl':'ltr';e.hidden=false;document.body.style.overflow='hidden';const b=e.querySelector('button.go,button');if(b)b.focus({preventScroll:true})};
 addEventListener('keydown',e=>{if(e.key=='Escape')[RM,VD].forEach(x=>{if(!x.hidden)cl(x)})});
 /* ---- reminders ---- */
 const RM=ov('rm');
@@ -1634,7 +1652,7 @@ function VR(){const c=VD.firstChild;VD.dir=S.lang=='ar'?'rtl':'ltr';
  $('vsk').onclick=()=>{S.vs=pick;save();cl(VD)}}
 window.openVoiceStyle=()=>{pick=[0,1,2].includes(S.vs)?S.vs:0;VR();op(VD)};
 let ut=0;new MutationObserver(()=>{if($('lock').hidden)ut=Date.now()}).observe($('lock'),{attributes:true,attributeFilter:['hidden']});if($('lock').hidden)ut=Date.now()-1e4;
-setInterval(()=>{if(Date.now()-ut>5000&&$('lock').hidden&&$('gd').hidden&&$('ap').hidden&&VD.hidden&&RM.hidden&&S.vs===undefined&&!rb&&!document.querySelector('dialog[open]')&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')){rb=true;window.openVoiceStyle()}},2500);
+setInterval(()=>{if(Date.now()-ut>5000&&$('lock').hidden&&$('gd').hidden&&$('ap').hidden&&VD.hidden&&RM.hidden&&S.vs===undefined&&!rb&&!document.querySelector('dialog[open]')&&!document.querySelector('body>div[id]:not([hidden])>.card[role=dialog]')&&!/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||'')){rb=true;window.openVoiceStyle()}},2500);
 /* ---- header buttons, tooltips, language refresh ---- */
 const mk=(lab,txt,fn)=>{const b=document.createElement('button');b.className='ico';b.textContent=txt;b.setAttribute('aria-label',lab);b.onclick=fn;return b};
 const gb=document.querySelector('[aria-label=games]');gb.after(mk('reminders','🔔',()=>{RD();op(RM)}),mk('voice style','🎚️',()=>window.openVoiceStyle()));
@@ -1664,7 +1682,7 @@ done:['All done. Your heart is lovely 💗','Hepsi tamam. Kalbin çok güzel �
 hz:['Hifz reviews due','Tekrar bekleyen Hıfz','مراجعات حفظ مستحقة','Révisions de Hifz à faire'],str:['days in a row','gün üst üste','أيام متتالية','jours de suite']};
 const hd=()=>{const o=S.kh=S.kh&&typeof S.kh=='object'&&!Array.isArray(S.kh)?S.kh:{};if(S.hd&&typeof S.hd=='object'){for(const k of Object.keys(S.hd))if(/^\d{4}-\d\d-\d\d$/.test(k)){if(!o[k])o[k]=S.hd[k];delete S.hd[k]}}const k=Object.keys(o).sort();while(k.length>90)delete o[k.shift()];return o};
 const hc=()=>(S.hc=(Array.isArray(S.hc)?S.hc:[]).filter(x=>x&&typeof x.id=='string'&&typeof x.t=='string').slice(0,6).map(x=>({id:x.id.slice(0,24),t:x.t.slice(0,120)})));
-const dt=()=>(S.dt=(Array.isArray(S.dt)?S.dt:[]).filter(x=>x&&typeof x.n=='string'&&OK.test(x.d)).slice(0,80).map(x=>({...x,id:String(x.id||uid()).slice(0,24),n:x.n.slice(0,60),d:x.d,k:[0,1,2].includes(+x.k)?+x.k:0,l:[0,1,3,7].includes(+x.l)?+x.l:1,y:x.y===0?0:1,x:String(x.x||'').slice(0,120),f:String(x.f||'')})));
+const dt=()=>(S.dt=(Array.isArray(S.dt)?S.dt:[]).filter(x=>x&&typeof x.n=='string'&&OK.test(x.d)).slice(0,80).map(x=>({...x,id:String(x.id||uid()).slice(0,24),n:x.n.slice(0,60),d:x.d,k:[0,1,2].includes(+x.k)?+x.k:0,l:[0,1,3,7].includes(+x.l)?+x.l:1,y:x.y===0?0:1,x:String(x.x||'').slice(0,160),f:String(x.f||'')})));
 let tab='t';const card=document.createElement('div');card.className='card';card.id='hrt';card.dataset.ix='1.5';
 const items=()=>[...K.q.map((q,i)=>({id:'q'+i,t:N(q)})),...hc().map(c=>({id:'c'+c.id,t:c.t,c:c.id}))];
 const nextOcc=(x)=>{const [Y,M,D]=x.d.split('-').map(Number),now=new Date(today()+'T00:00:00');const mk=y=>{const last=new Date(y,M,0).getDate();return new Date(y,M-1,Math.min(D,last))};
@@ -1769,7 +1787,7 @@ ws:['Send wishes','Tebrik gönder','أرسلي التهنئة','Envoyer des vœu
 st:['Wishes sent','Gönderilen tebrik','تهانٍ أُرسلت','Vœux envoyés'],tl:[['🌱 Getting started','🌱 Yeni başlıyor','🌱 البداية','🌱 Bien parti'],['🌷 Thoughtful friend','🌷 Düşünceli dost','🌷 صديقة مراعية','🌷 Amie attentionnée'],['💐 Heart keeper','💐 Gönül bekçisi','💐 حافظة القلوب','💐 Gardienne des cœurs'],['🌸 Always remembers','🌸 Hiç unutmaz','🌸 لا تنسى أبداً','🌸 N\'oublie jamais'],['👑 Queen of kindness','👑 Nezaket kraliçesi','👑 ملكة اللطف','👑 Reine de la gentillesse']],
 ex:['📅 Add to my calendar (.ics)','📅 Takvime ekle (.ics)','📅 أضيفي إلى تقويمي (.ics)','📅 Ajouter à mon calendrier (.ics)'],tu:['turning','yaşına giriyor','يبلغ','a bientôt'],yrs:['years','yıl','سنة','ans'],on:['falls on','denk geliyor:','يصادف','tombe un'],hj:['Hijri','Hicri','هجري','Hégire'],
 tip:['Birthdays and events of the people you love, with gifts and ready wishes','Sevdiklerinin doğum günleri, hediyeler ve hazır tebrikler','أعياد ميلاد من تحبين مع الهدايا وتهانٍ جاهزة','Anniversaires de tes proches, cadeaux et vœux prêts'],
-tb:['Edit','Düzenle','تعديل','Modifier']};
+tb:['Edit','Düzenle','تعديل','Modifier'],pa:['Passed','Geçti','انتهى','Passé']};
 const AV=['👩','👨','👧','👦','👵','👴','🧕','👶','💖','🌸','🐱','⭐'],RA=['👩','👨','👧','👦','👵','🏡','🌸','💖','📚','⭐'],RG=['p','p','f','f','e','e','f','f','e','o'];
 const WS={p:[['Happy birthday, {n}! 🎂 Thank you for everything you do for me. I love you so much. May Allah bless your every day.','Doğum günün kutlu olsun {n}! 🎂 Benim için yaptığın her şey için teşekkür ederim. Seni çok seviyorum. Allah her gününü hayırla doldursun.','عيد ميلاد سعيد يا {n}! 🎂 شكراً على كل ما تفعله من أجلي. أحبك كثيراً، وبارك الله لك في كل أيامك.','Joyeux anniversaire {n} ! 🎂 Merci pour tout ce que tu fais pour moi. Je t\'aime très fort. Que Dieu bénisse chacun de tes jours.'],
 ['To the person who always believed in me: happy birthday, {n}! 💗 Wishing you health, peace and endless joy.','Bana hep inanan kişiye: iyi ki doğdun {n}! 💗 Sana sağlık, huzur ve bitmeyen mutluluk diliyorum.','إلى من آمن بي دائماً: كل عام وأنت بخير يا {n}! 💗 أتمنى لك الصحة والسكينة وفرحاً لا ينتهي.','À celui ou celle qui a toujours cru en moi : joyeux anniversaire {n} ! 💗 Je te souhaite santé, paix et joie sans fin.']],
@@ -1793,17 +1811,17 @@ const dl=x=>Math.round((occ(x)-T0())/864e5),yr=x=>occ(x).getFullYear(),wk=x=>x.i
 const av=(x,c)=>`<div class="sdav ${c||''}">${x.p?`<img alt="" src="${x.p}">`:esc(x.a||RA[x.r])}</div>`;
 const hij=d=>{try{return new Intl.DateTimeFormat(S.lang+'-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric'}).format(d)}catch(e){return ''}};
 const fmtD=d=>d.toLocaleDateString(S.lang,{day:'numeric',month:'long'}),wkd=d=>d.toLocaleDateString(S.lang,{weekday:'long'});
-const lab=(x)=>x.n2==0?N(W.td):x.n2==1?N(W.tm):x.n2+' '+N(W.dd);
+const lab=(x)=>x.n2<0?N(W.pa):x.n2==0?N(W.td):x.n2==1?N(W.tm):x.n2+' '+N(W.dd);
 const age=x=>{if(x.h||!x.y||x.k==2)return 0;const a=yr(x)-(+x.d.slice(0,4));return a>0&&a<130?a:0};
 let fl='all',mo=-1,celeb=false;const card=document.createElement('div');card.className='card';card.id='sdc';card.dataset.ix='1.7';
-function R(){const items=SD().map(x=>({...x,n2:dl(x)})).sort((a,b)=>a.n2-b.n2),hero=items[0];
+function R(){const items=SD().map(x=>({...x,n2:dl(x)})).sort((a,b)=>(a.n2<0)-(b.n2<0)||(a.n2<0?b.n2-a.n2:a.n2-b.n2)),hero=items[0]&&items[0].n2>=0?items[0]:null;
  const cnt=Array(12).fill(0);items.forEach(x=>cnt[occ(x).getMonth()]++);
  let list=items.filter(x=>(fl=='all'||x.k==+fl)&&(mo<0||occ(x).getMonth()==mo));if(fl=='all'&&mo<0)list=list.filter(x=>x!==hero);
  const w=sw(),tl=w.n>=30?4:w.n>=15?3:w.n>=5?2:w.n>=1?1:0,curM=new Date().getMonth();
  card.innerHTML=`<h2><span>${N(W.ti)} 🎂</span></h2>`+(hero?hr(hero):`<p class="empty" style="padding:16px">${N(W.emp)}</p>`)+
  `<div class="row" style="margin:10px 0 6px">${[['all',N(W.all)],['0','🎂'],['1','💍'],['2','📌']].map(([k,l])=>`<button type="button" class="pill ${fl==k?'on':''}" data-f="${k}">${l}</button>`).join('')}<button type="button" class="pill" id="sda" style="margin-inline-start:auto">➕ ${N(W.add)}</button></div>
  <div class="sdmo">${Array.from({length:12},(_,m)=>`<button type="button" class="${mo==m?'on':''} ${m==curM?'cur':''}" data-m="${m}">${new Date(2024,m,1).toLocaleDateString(S.lang,{month:'short'})}${cnt[m]?`<i>${cnt[m]}</i>`:''}</button>`).join('')}</div>
- <div class="hkl" style="margin-top:10px">${list.map(x=>`<div class="sdrow ${x.n2==0?'today':''}" data-o="${x.id}">${av(x,'s')}<span class="t">${esc(x.n)}${age(x)?` · ${age(x)}`:''}<small>${['🎂','💍','📌'][x.k]} ${esc(N(x.k==2?W.k[2]:W.rel[x.r]))} · ${esc(fmtD(occ(x)))}</small></span><span class="sda"><span class="chip">${lab(x)}</span>${x.g.length?`<button type="button" class="mini" data-g="${x.id}" aria-label="${N(W.gf)}">🎁</button>`:''}<button type="button" class="mini" data-w="${x.id}" aria-label="${N(W.ws)}">💌</button><button type="button" class="mini" data-e="${x.id}" aria-label="${N(W.tb)}">✏️</button></span><i class="pg" style="width:${Math.max(2,100-Math.min(100,x.n2/3.65))}%"></i></div>`).join('')}</div>
+ <div class="hkl" style="margin-top:10px">${list.map(x=>`<div class="sdrow ${x.n2==0?'today':''} ${x.n2<0?'past':''}" data-o="${x.id}">${av(x,'s')}<span class="t">${esc(x.n)}${age(x)?` · ${age(x)}`:''}<small>${['🎂','💍','📌'][x.k]} ${esc(N(x.k==2?W.k[2]:W.rel[x.r]))} · ${esc(fmtD(occ(x)))}</small></span><span class="sda"><span class="chip">${lab(x)}</span>${x.g.length?`<button type="button" class="mini" data-g="${x.id}" aria-label="${N(W.gf)}">🎁</button>`:''}<button type="button" class="mini" data-w="${x.id}" aria-label="${N(W.ws)}">💌</button><button type="button" class="mini" data-e="${x.id}" aria-label="${N(W.tb)}">✏️</button></span><i class="pg" style="width:${Math.max(2,100-Math.min(100,x.n2/3.65))}%"></i></div>`).join('')}</div>
  ${items.length&&!list.length?`<p class="empty" style="padding:12px">—</p>`:''}
  <div class="row" style="justify-content:space-between;margin-top:12px"><span class="chip">💌 ${N(W.st)}: ${w.n} · ${N(W.tl[tl])}</span>${items.length?`<button type="button" class="pill" id="sdx">${N(W.ex)}</button>`:''}</div>`;
  card.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{fl=b.dataset.f;R()});card.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{mo=mo==+b.dataset.m?-1:+b.dataset.m;R()});
@@ -1817,7 +1835,7 @@ function hr(x){const o=occ(x),a=age(x),done=sw().l[wk(x)],g=x.g.length;
  <div class="sdbig" id="sdcd">${x.n2==0?N(W.td):cd(x)}</div><div class="sdmeta">${esc(wkd(o))}, ${esc(fmtD(o))} ${o.getFullYear()}${hij(o)?`<br>${N(W.hj)}: ${esc(hij(o))}`:''}${x.x?`<br>${esc(x.x)}`:''}</div>
  <div class="sdact"><button type="button" class="pill on" data-w="${x.id}">💌 ${N(W.ws)}</button><button type="button" class="pill" data-g="${x.id}">🎁 ${g?x.g.filter(z=>z.b).length+'/'+g:N(W.gf)}</button><button type="button" class="pill" data-e="${x.id}" aria-label="${N(W.tb)}">✏️</button>${x.n2==0&&!done?`<button type="button" class="pill" data-mk="${x.id}">${N(W.mw)}</button>`:''}${done?`<span class="chip">${N(W.wd)}</span>`:''}</div></div></div>`}
 function cd(x){const ms=occ(x)-new Date(),d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);return `${d} ${N(W.dd)} · ${h}${N(W.hh)} ${m}${N(W.mm)}`}
-setInterval(()=>{const e=$('sdcd');if(!e||document.hidden)return;const h=SD().map(x=>({...x,n2:dl(x)})).sort((a,b)=>a.n2-b.n2)[0];if(h&&h.n2>0)e.textContent=cd(h)},3e4);
+setInterval(()=>{const e=$('sdcd');if(!e||document.hidden)return;const h=SD().map(x=>({...x,n2:dl(x)})).filter(x=>x.n2>=0).sort((a,b)=>a.n2-b.n2)[0];if(h&&h.n2>0)e.textContent=cd(h)},3e4);
 function mark(id){const x=SD().find(z=>z.id==id);if(!x)return;const w=sw(),k=wk(x);if(w.l[k])return;w.l[k]=1;w.n++;const keys=Object.keys(w.l);while(keys.length>200)delete w.l[keys.shift()];sv();try{setCoins(3);toast('💌 +3 💎');sfx('crystal');burst(null,20)}catch(e){}R()}
 /* overlays */
 function ov(id){const e=document.createElement('div');e.id=id;e.hidden=true;e.innerHTML='<div class="card gdc" role="dialog" aria-modal="true"></div>';document.body.appendChild(e);e.onclick=ev=>{if(ev.target===e)cl(e)};return e}
@@ -1833,33 +1851,33 @@ function edit(id){const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',
  <label>${N(W.av)}</label><div class="avp">${AV.map(a=>`<button type="button" data-a="${a}" class="${!F.p&&F.a==a?'on':''}">${a}</button>`).join('')}<button type="button" id="fp" class="${F.p?'on':''}" style="font-size:.7rem;font-weight:800">${F.p?`<img alt="" src="${F.p}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`:N(W.ph)}</button><input type="file" id="ff" accept="image/*" hidden></div>
  <label for="fl">${N(W.rm)}</label><select class="in" id="fl">${W.ld.map((l,i)=>`<option value="${[0,1,3,7][i]}" ${F.l==[0,1,3,7][i]?'selected':''}>${esc(N(l))}</option>`).join('')}</select>
  ${F.k==2?`<label class="rmr" style="cursor:pointer;display:flex;gap:8px"><input type="checkbox" id="fy" ${F.y?'checked':''}> ${N(W.yr)}</label>`:''}${F.k==0?`<label style="display:flex;gap:8px;cursor:pointer"><input type="checkbox" id="fh" ${F.h?'checked':''}> ${N(W.ha)}</label>`:''}
- <label for="fx">${N(W.nt)}</label><input class="in" id="fx" maxlength="160" value="${esc(F.x)}">
+ <label for="fnote">${N(W.nt)}</label><input class="in" id="fnote" maxlength="160" value="${esc(F.x)}">
  <div class="gdb"><button type="button" class="go" id="fs">${N(W.sa)}</button><button type="button" class="pill" id="fc">${N(W.ca)}</button>${old?`<button type="button" class="pill" id="fdl">🗑 ${N(W.de)}</button>`:''}</div>`;
-  const keep=()=>{F.n=$('fn').value;F.d=$('fd').value;F.r=+$('fr').value;F.l=+$('fl').value;F.x=$('fx').value;if($('fy'))F.y=$('fy').checked?1:0;if($('fh'))F.h=$('fh').checked?1:0};
+  const keep=()=>{F.n=$('fn').value;F.d=$('fd').value;F.r=+$('fr').value;F.l=+$('fl').value;F.x=$('fnote').value;if($('fy'))F.y=$('fy').checked?1:0;if($('fh'))F.h=$('fh').checked?1:0};M._kp=keep;
   c.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{keep();F.k=+b.dataset.k;if(F.k!=2)F.y=1;draw()});c.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{keep();F.a=b.dataset.a;F.p='';draw()});
   $('fr').onchange=()=>{keep();if(!F.a&&!F.p){}};$('fp').onclick=()=>{keep();$('ff').click()};
   $('ff').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;keep();const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=112;const x=cv.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,112,112);F.p=cv.toDataURL('image/jpeg',.8);URL.revokeObjectURL(u);draw()};im.onerror=()=>URL.revokeObjectURL(u);im.src=u};
   $('fc').onclick=()=>cl(M);const dl_=$('fdl');if(dl_)dl_.onclick=()=>{if(confirm(N(W.dc))){S.dt=SD().filter(z=>z.id!=old.id);sv();cl(M);R();try{sfx('trash')}catch(e){}}};
-  $('fs').onclick=()=>{keep();const n=F.n.trim().slice(0,60);if(!n){$('fn').focus();try{sfx('err')}catch(e){}return}if(!OK.test(F.d)||isNaN(new Date(F.d+'T00:00:00'))){$('fd').focus();return}
+  $('fs').onclick=()=>{keep();const n=F.n.trim().slice(0,60);if(!n){$('fn').focus();try{sfx('err')}catch(e){}return}if(!OK.test(F.d)||isNaN(new Date(F.d+'T00:00:00'))){$('fd').focus();try{sfx('err')}catch(e){}return}
    const rec=san({...F,n,id:old?old.id:uid(),f:''});const a=SD();if(old){const i=a.findIndex(z=>z.id==old.id);if(i>=0)a[i]=rec}else a.push(rec);okS.add(rec);sv();cl(M);R();try{sfx('add');if(!old)burst(null,14)}catch(e){}}};
- draw();op(M);setTimeout(()=>{try{$('fn').focus()}catch(e){}},50)}
+ M._rd=draw;M._ln=S.lang;draw();op(M);setTimeout(()=>{try{$('fn').focus()}catch(e){}},50)}
 /* gifts */
 function gifts(id){const c=G.firstChild;const draw=()=>{const x=SD().find(z=>z.id==id);if(!x){cl(G);return}
  c.innerHTML=`<h2>🎁 ${N(W.gf)} · ${esc(x.n)}</h2><p class="sdmeta">${x.g.filter(z=>z.b).length} / ${x.g.length} ${N(W.gb)}</p><div class="hkl">${x.g.map((g,i)=>`<div class="gfi ${g.b?'b':''}"><input type="checkbox" data-b="${i}" ${g.b?'checked':''} aria-label="bought" style="width:20px;height:20px;accent-color:var(--p)"><span>${esc(g.t)}</span><button type="button" class="mini" data-x="${i}" aria-label="delete">🗑</button></div>`).join('')}</div>
  <div class="row"><input class="in" id="gi" maxlength="70" placeholder="${esc(N(W.gp))}" style="flex:1;min-width:140px"><button type="button" class="go" id="ga" style="margin:0;width:auto;padding:10px 18px">➕</button></div><div class="gdb"><button type="button" class="pill" id="gc">${N(W.cl)}</button></div>`;
  const add=()=>{const t=$('gi').value.trim().slice(0,70);if(!t||x.g.length>=15)return;x.g.push({t,b:0});sv();draw();try{sfx('add')}catch(e){}R()};
  $('ga').onclick=add;$('gi').onkeydown=e=>{if(e.key=='Enter'){e.preventDefault();add()}};c.querySelectorAll('[data-b]').forEach(b=>b.onchange=()=>{x.g[+b.dataset.b].b=b.checked?1:0;sv();draw();try{sfx(b.checked?'crystal':'tap')}catch(e){}R()});
- c.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{x.g.splice(+b.dataset.x,1);sv();draw();R()});$('gc').onclick=()=>{cl(G);R()}};draw();op(G)}
+ c.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{x.g.splice(+b.dataset.x,1);sv();draw();R()});$('gc').onclick=()=>{cl(G);R()}};G._rd=draw;G._ln=S.lang;draw();op(G)}
 /* wishes */
 function wish(id){const x=SD().find(z=>z.id==id);if(!x)return;let vi=Math.floor(Math.random()*2);const c=H.firstChild,set=x.k==0?WS[RG[x.r]]:x.k==1?WS.a:WS.v;
- const msg=()=>N(set[vi%set.length]).replace(/\{n\}/g,x.n);
+ const msg=()=>N(set[vi%set.length]).replace(/\{n\}/g,()=>x.n);
  const draw=()=>{c.innerHTML=`<h2>💌 ${N(W.ws)} · ${esc(x.n)}</h2><textarea class="in wsh" id="wt" maxlength="600">${esc(msg())}</textarea><div class="gdb"><button type="button" class="go" id="wc">${N(W.cp)}</button><button type="button" class="pill" id="ww">${N(W.wa)}</button>${navigator.share?`<button type="button" class="pill" id="wsh">${N(W.sh)}</button>`:''}<button type="button" class="pill" id="wo">🔄 ${N(W.ot)}</button></div><div class="gdb"><button type="button" class="pill" id="wm">${N(W.mw)}</button><button type="button" class="pill" id="wx">${N(W.cl)}</button></div>`;
   const txt=()=>$('wt').value;
   $('wo').onclick=()=>{vi++;draw()};$('wx').onclick=()=>cl(H);
   $('wc').onclick=async()=>{try{await navigator.clipboard.writeText(txt())}catch(e){$('wt').select();try{document.execCommand('copy')}catch(z){}}toast(N(W.cd))};
   $('ww').onclick=()=>window.open('https://wa.me/?text='+encodeURIComponent(txt()),'_blank','noopener');
   const sh=$('wsh');if(sh)sh.onclick=()=>navigator.share({text:txt()}).catch(()=>{});
-  $('wm').onclick=()=>{cl(H);mark(x.id)}};draw();op(H)}
+  $('wm').onclick=()=>{cl(H);mark(x.id)}};H._rd=draw;H._ln=S.lang;draw();op(H)}
 /* calendar export */
 function ics(){const p=n=>String(n).padStart(2,'0'),esc2=s=>String(s).replace(/[\\;,]/g,m=>'\\'+m).replace(/\n/g,'\\n'),now=new Date(),st=now.getUTCFullYear()+p(now.getUTCMonth()+1)+p(now.getUTCDate())+'T'+p(now.getUTCHours())+p(now.getUTCMinutes())+p(now.getUTCSeconds())+'Z';
  let o='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//KouKou//Special Days//EN\r\nCALSCALE:GREGORIAN\r\n';
@@ -1869,7 +1887,7 @@ function ics(){const p=n=>String(n).padStart(2,'0'),esc2=s=>String(s).replace(/[
 window.openSpecialDays=()=>{card.scrollIntoView({behavior:'smooth',block:'center'})};
 window._addCard(card,true);R();
 document.addEventListener('mouseover',e=>{const h=e.target.closest&&e.target.closest('#sdc h2');if(h)h.title=N(W.tip)});
-const _i4=i18n;i18n=function(){_i4();R();if(!M.hidden)M.firstChild.innerHTML='';};
+const _i4=i18n;i18n=function(){_i4();R();[M,G,H].forEach(m=>{if(!m.hidden&&m._rd&&m._ln!==S.lang){try{if(m._kp)m._kp();m._ln=S.lang;m._rd()}catch(e){cl(m)}}})};
 new MutationObserver(()=>{if($('lock').hidden)setTimeout(()=>{celeb=false;R()},1500)}).observe($('lock'),{attributes:true,attributeFilter:['hidden']});
 setInterval(()=>{const k=today();if(card.dataset.d!=k){card.dataset.d=k;R()}},6e4);
 })();
@@ -2829,7 +2847,7 @@ const Y={ti:['Firebase Cloud Sync','Firebase Bulut Eşitleme','المزامنة 
 /* Header Chip */
 const chip=document.createElement('button');chip.type='button';chip.id='syc';chip.className='pill';chip.setAttribute('aria-label','sync');
 const targetHeader = $('snd') || document.querySelector('.bar .row:last-child');
-if(targetHeader) targetHeader.prepend(chip);
+if(targetHeader) targetHeader.before(chip);
 
 function setSt(s){status=s;const c=cfg();chip.classList.toggle('busy',s=='busy');chip.textContent=!c?'☁️':s=='ok'?'☁️✓':s=='busy'?'☁️⟳':s=='off'?'☁️⏸':'☁️⚠';chip.title=N(Y.tip)+(c?' · '+stText():'');if(!SY.hidden)draw()}
 const stText=()=>{const c=cfg();if(!c)return '';if(status=='busy')return N(Y.st_busy);if(status=='off')return N(Y.st_off);if(status=='err'){const m={perm:Y.e_perm,pass:Y.e_pass,net:Y.e_net,other:Y.e_other};return N(Y.st_err)+': '+N(m[lastErr]||Y.e_other)}return N(Y.st_ok)+(c.t?' · '+new Date(c.t).toLocaleString(S.lang,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'')};
