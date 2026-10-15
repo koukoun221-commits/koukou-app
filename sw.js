@@ -2,7 +2,7 @@
    - Page itself: network first (so updates arrive), cache as fallback when offline.
    - Icons / manifest: cache first.
    - Other websites (prayer times, search links) are never touched. */
-const CACHE = 'koukou-v3';
+const CACHE = 'koukou-v4';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
