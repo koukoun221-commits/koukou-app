@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Diamond KouKou 💎</title>
-<meta name="description" content="Study planner with focus timer, mood diary and sound garden."><meta name="theme-color" content="#b81745"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Study planner with focus timer, mood diary and sound garden."><meta name="theme-color" content="#b81745"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="data:application/manifest+json,{%22name%22:%22The%20Diamond%20KouKou%22,%22short_name%22:%22KouKou%22,%22description%22:%22Study%20planner%20with%20focus%20timer,%20mood%20diary%20and%20sound%20garden%22,%22start_url%22:%22./%22,%22scope%22:%22./%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait%22,%22background_color%22:%22%23b81745%22,%22theme_color%22:%22%23b81745%22,%22icons%22:[{%22src%22:%22./icon-192.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22,%22purpose%22:%22any%22},{%22src%22:%22./icon-512.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22,%22purpose%22:%22any%22}]}">
 <style>
 :root{--p:#b81745;--bg1:#fff0f3;--bg2:#ffd6e0;--bd:#ffccd5;--tx:#3d1f28;--mu:#875463;--card:rgba(255,255,255,.93);--in:#fff;--sec:#fff0f3;--r:20px;--gl:0 10px 28px color-mix(in srgb,var(--p) 22%,transparent)}
 body.dark{--bg1:#1b1220;--bg2:#2a1a33;--card:rgba(40,28,48,.92);--in:#2f2038;--sec:#35243f;--tx:#f7e9f0;--mu:#c9a9bb;--bd:#4d3560}
@@ -2890,6 +2890,146 @@ window._sync={syncNow,state:()=>({status,lastErr,cfg:cfg()}),units:()=>unitsOf(S
 window._syncReset=()=>{setCfg(null);clearTimeout(pt);setSt('off');};
 if(!cfg())setSt('off');
 })();</script>
-<script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
+<script>
+/* ===== AUTO-INSTALLATION & CACHE MANAGEMENT v5 PRO ===== */
+
+// Track if user has installed or dismissed prompt
+const INSTALL_KEY = 'koukou_install_prompt_dismissed';
+const CACHE_CLEARED_KEY = 'koukou_cache_cleared_' + Date.now().toString().slice(0, -3);
+
+// STEP 1: Auto-clear cache on first load to fix all issues
+function forceCleanCache() {
+  if (typeof caches !== 'undefined') {
+    caches.keys().then(cacheNames => {
+      cacheNames.forEach(cacheName => {
+        caches.delete(cacheName);
+        console.log('🧹 Cleared cache:', cacheName);
+      });
+    });
+  }
+  
+  // Also clear service worker cache via message
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'CLEAR_CACHE'
+    });
+  }
+  
+  // Mark cache as cleared in session
+  sessionStorage.setItem(CACHE_CLEARED_KEY, 'true');
+}
+
+// Force clear cache immediately on load
+forceCleanCache();
+
+// STEP 2: Register service worker immediately (no wait for load event)
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  navigator.serviceWorker.register('sw.js', { scope: './' })
+    .then(reg => {
+      console.log('✅ Service Worker registered:', reg.scope);
+      
+      // Check for updates every 5 seconds
+      const checkUpdates = () => {
+        reg.update().catch(e => console.log('Update check failed:', e));
+      };
+      setInterval(checkUpdates, 5000);
+      
+      // Aggressive update check
+      reg.update();
+    })
+    .catch(err => {
+      console.warn('⚠️ Service Worker registration failed:', err);
+    });
+}
+
+// STEP 3: Auto-install PWA on mobile (no user click needed for fresh installs)
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  console.log('📲 Install prompt available');
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Auto-trigger install on fresh visits (check if first time)
+  const hasVisited = localStorage.getItem('koukou_first_visit');
+  if (!hasVisited) {
+    localStorage.setItem('koukou_first_visit', 'true');
+    console.log('🚀 First visit - triggering auto-install');
+    
+    // Delay install prompt by 2 seconds to let app load
+    setTimeout(() => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('✅ User accepted install');
+          } else {
+            console.log('ℹ️ User dismissed install');
+          }
+          deferredPrompt = null;
+        });
+      }
+    }, 2000);
+  }
+});
+
+// Allow manual install via system prompt anytime
+window.addEventListener('appinstalled', () => {
+  console.log('✅ App installed successfully!');
+  localStorage.setItem('koukou_app_installed', 'true');
+});
+
+// STEP 4: Force sync on every page load
+function forceSyncOnLoad() {
+  setTimeout(() => {
+    if (typeof _sync !== 'undefined' && typeof _sync.syncNow === 'function') {
+      console.log('🔄 Forcing sync on page load');
+      try {
+        _sync.syncNow('page-load');
+      } catch (e) {
+        console.warn('Sync trigger failed:', e);
+      }
+    }
+  }, 1500);
+}
+
+// Trigger on load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', forceSyncOnLoad);
+} else {
+  forceSyncOnLoad();
+}
+
+// Also force sync when visibility changes
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    console.log('📱 App became visible - forcing sync');
+    if (typeof _sync !== 'undefined' && typeof _sync.syncNow === 'function') {
+      _sync.syncNow('visible');
+    }
+  }
+});
+
+// STEP 5: Auto-sync every 30 seconds when using app
+setInterval(() => {
+  if (!document.hidden && typeof _sync !== 'undefined' && typeof _sync.syncNow === 'function') {
+    _sync.syncNow('auto-interval');
+  }
+}, 30000);
+
+// STEP 6: Listen for service worker messages for sync reminders
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SYNC_REMINDER') {
+      console.log('🔄 Sync reminder from service worker');
+      if (typeof _sync !== 'undefined' && typeof _sync.syncNow === 'function') {
+        _sync.syncNow('service-worker');
+      }
+    }
+  });
+}
+
+console.log('✅ KouKou Auto-Install & Sync System Ready!');
+</script>
 </body>
 </html>
