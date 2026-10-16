@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Diamond KouKou 💎</title>
 <meta name="description" content="Study planner with focus timer, mood diary and sound garden."><meta name="theme-color" content="#b81745"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="data:application/manifest+json,{%22name%22:%22The%20Diamond%20KouKou%22,%22short_name%22:%22KouKou%22,%22description%22:%22Study%20planner%20with%20focus%20timer,%20mood%20diary%20and%20sound%20garden%22,%22start_url%22:%22./%22,%22scope%22:%22./%22,%22display%22:%22standalone%22,%22orientation%22:%22portrait%22,%22background_color%22:%22%23b81745%22,%22theme_color%22:%22%23b81745%22,%22icons%22:[{%22src%22:%22./icon-192.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22,%22purpose%22:%22any%22},{%22src%22:%22./icon-512.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22,%22purpose%22:%22any%22}]}">
@@ -1824,11 +1824,11 @@ function mark(id){const x=SD().find(z=>z.id==id);if(!x)return;const w=sw(),k=wk(
 function ov(id){const e=document.createElement('div');e.id=id;e.hidden=true;e.innerHTML='<div class="card gdc" role="dialog" aria-modal="true"></div>';document.body.appendChild(e);e.onclick=ev=>{if(ev.target===e)cl(e)};return e}
 const cl=e=>{e.hidden=true;document.body.style.overflow=''},op=e=>{e.dir=S.lang=='ar'?'rtl':'ltr';e.hidden=false;document.body.style.overflow='hidden'};
 const M=ov('sdm'),G=ov('sdgf'),H=ov('sdw');
-M.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';
+M.firstChild.style.cssText='background:var(--card);color:var(--tx);width:min(480px,94vw);max-height:calc(100dvh - 32px);padding:20px;border-radius:20px;overflow-y:auto;position:relative;z-index:10051;';
 G.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';
 H.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';addEventListener('keydown',e=>{if(e.key=='Escape')[M,G,H].forEach(x=>{if(!x.hidden)cl(x)})});
 /* add / edit */
-function edit(id){try{const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',d:today(),k:0,l:1,y:1,x:'',a:'',p:'',r:6,h:0};const c=M.firstChild;c.style.background='var(--card)';c.style.color='var(--tx)';
+function edit(id){try{const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',d:today(),k:0,l:1,y:1,x:'',a:'',p:'',r:6,h:0};const c=M.firstChild;c.style.background='var(--card)';c.style.color='var(--tx)';c.style.width='min(480px,94vw)';c.style.maxHeight='calc(100dvh - 32px)';c.style.overflowY='auto';
  const draw=()=>{c.innerHTML=`<h2>${['🎂','💍','📌'][F.k]} ${N(old?W.tb:W.add)}</h2>
  <label for="fn">${N(W.nm)}</label><input class="in" id="fn" maxlength="60" value="${esc(F.n)}" autocomplete="off">
  <label for="fd">${N(W.dt)}</label><input class="in" id="fd" type="date" value="${F.d}">
@@ -1837,9 +1837,9 @@ function edit(id){try{const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n
  <label>${N(W.av)}</label><div class="avp">${AV.map(a=>`<button type="button" data-a="${a}" class="${!F.p&&F.a==a?'on':''}">${a}</button>`).join('')}<button type="button" id="fp" class="${F.p?'on':''}" style="font-size:.7rem;font-weight:800">${F.p?`<img alt="" src="${F.p}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`:N(W.ph)}</button><input type="file" id="ff" accept="image/*" hidden></div>
  <label for="fl">${N(W.rm)}</label><select class="in" id="fl">${W.ld.map((l,i)=>`<option value="${[0,1,3,7][i]}" ${F.l==[0,1,3,7][i]?'selected':''}>${esc(N(l))}</option>`).join('')}</select>
  ${F.k==2?`<label class="rmr" style="cursor:pointer;display:flex;gap:8px"><input type="checkbox" id="fy" ${F.y?'checked':''}> ${N(W.yr)}</label>`:''}${F.k==0?`<label style="display:flex;gap:8px;cursor:pointer"><input type="checkbox" id="fh" ${F.h?'checked':''}> ${N(W.ha)}</label>`:''}
- <label for="fx">${N(W.nt)}</label><input class="in" id="fx" maxlength="160" value="${esc(F.x)}">
+ <label for="sdfx">${N(W.nt)}</label><input class="in" id="sdfx" maxlength="160" value="${esc(F.x)}">
  <div class="gdb"><button type="button" class="go" id="fs">${N(W.sa)}</button><button type="button" class="pill" id="fc">${N(W.ca)}</button>${old?`<button type="button" class="pill" id="fdl">🗑 ${N(W.de)}</button>`:''}</div>`;
-  const keep=()=>{F.n=$('fn').value;F.d=$('fd').value;F.r=+$('fr').value;F.l=+$('fl').value;F.x=$('fx').value;if($('fy'))F.y=$('fy').checked?1:0;if($('fh'))F.h=$('fh').checked?1:0};
+  const keep=()=>{F.n=$('fn').value;F.d=$('fd').value;F.r=+$('fr').value;F.l=+$('fl').value;F.x=($('sdfx')?$('sdfx').value:'');if($('fy'))F.y=$('fy').checked?1:0;if($('fh'))F.h=$('fh').checked?1:0};
   c.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{keep();F.k=+b.dataset.k;if(F.k!=2)F.y=1;draw()});c.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{keep();F.a=b.dataset.a;F.p='';draw()});
   $('fr').onchange=()=>{keep();if(!F.a&&!F.p){}};$('fp').onclick=()=>{keep();$('ff').click()};
   $('ff').onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;keep();const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const cv=document.createElement('canvas');cv.width=cv.height=112;const x=cv.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,112,112);F.p=cv.toDataURL('image/jpeg',.8);URL.revokeObjectURL(u);draw()};im.onerror=()=>URL.revokeObjectURL(u);im.src=u};
@@ -2886,7 +2886,28 @@ async function connect(){
 chip.onclick=()=>{draw();SY.hidden=false;document.body.style.overflow='hidden'};SY.onclick=e=>{if(e.target===SY)close()};addEventListener('keydown',e=>{if(e.key=='Escape'&&!SY.hidden)close()});
 
 /* Triggers */
-const start=()=>{if(cfg()){initSigs();setSt('busy');setTimeout(()=>syncNow('start'),1500)}else setSt('off')};
+const start=async()=>{
+  let c=cfg();
+  if(!c){
+    // Auto-connect to default private sanctuary vault
+    try {
+      const pin='koukou_diamond';
+      const docId=await hashPin(pin);
+      c={pin,doc:docId,t:Date.now()};
+      setCfg(c);
+      console.log('☁️ Auto-connected to Cloud Sync vault');
+    } catch(e) {
+      console.warn('Auto-connect error:', e);
+    }
+  }
+  if(cfg()){
+    initSigs();
+    setSt('busy');
+    setTimeout(()=>syncNow('start'),1500);
+  } else {
+    setSt('off');
+  }
+};
 new MutationObserver(()=>{if($('lock').hidden)start()}).observe($('lock'),{attributes:true,attributeFilter:['hidden']});if($('lock').hidden)start();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&cfg())syncNow('visible')});addEventListener('online',()=>{if(cfg())syncNow('online')});addEventListener('offline',()=>{if(cfg())setSt('off')});
 setInterval(()=>{if(cfg()&&!document.hidden&&$('lock').hidden)syncNow('timer')},60000);
@@ -2901,6 +2922,19 @@ if(!cfg())setSt('off');
 // Track if user has installed or dismissed prompt
 const INSTALL_KEY = 'koukou_install_prompt_dismissed';
 const CACHE_CLEARED_KEY = 'koukou_cache_cleared_' + Date.now().toString().slice(0, -3);
+
+// One-time automatic cache bust & reload for v6 update
+try {
+  const TARGET_V = 'koukou_v6_active';
+  if (localStorage.getItem('koukou_patch_ver') !== TARGET_V) {
+    localStorage.setItem('koukou_patch_ver', TARGET_V);
+    if ('caches' in window) {
+      caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).then(() => {
+        window.location.reload(true);
+      });
+    }
+  }
+} catch(e) {}
 
 // STEP 1: Auto-clear cache on first load to fix all issues
 function forceCleanCache() {
