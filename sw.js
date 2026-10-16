@@ -49,3 +49,5 @@ self.addEventListener('notificationclick', e => {            // tapping a remind
     return self.clients.openWindow('./');
   }));
 });
+
+self.addEventListener('message', e => { if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting(); });
