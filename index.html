@@ -1873,7 +1873,7 @@ function ics(){const p=n=>String(n).padStart(2,'0'),esc2=s=>String(s).replace(/[
 window.openSpecialDays=()=>{card.scrollIntoView({behavior:'smooth',block:'center'})};
 window._addCard(card,true);R();
 document.addEventListener('mouseover',e=>{const h=e.target.closest&&e.target.closest('#sdc h2');if(h)h.title=N(W.tip)});
-const _i4=i18n;i18n=function(){_i4();R();if(!M.hidden)M.firstChild.innerHTML='';};
+const _i4=i18n;i18n=function(){_i4();R();};
 new MutationObserver(()=>{if($('lock').hidden)setTimeout(()=>{celeb=false;R()},1500)}).observe($('lock'),{attributes:true,attributeFilter:['hidden']});
 setInterval(()=>{const k=today();if(card.dataset.d!=k){card.dataset.d=k;R()}},6e4);
 })();
@@ -2929,17 +2929,41 @@ forceCleanCache();
 
 // STEP 2: Register service worker immediately (no wait for load event)
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      console.log('🔄 New service worker activated, reloading page automatically...');
+      window.location.reload();
+    }
+  });
+
   navigator.serviceWorker.register('sw.js', { scope: './' })
     .then(reg => {
       console.log('✅ Service Worker registered:', reg.scope);
       
-      // Check for updates every 5 seconds
+      // If a worker is waiting, tell it to take over
+      if (reg.waiting) {
+        reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      }
+
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('⚡ New update ready, activating immediately...');
+              newWorker.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        }
+      });
+
+      // Check for updates periodically
       const checkUpdates = () => {
         reg.update().catch(e => console.log('Update check failed:', e));
       };
-      setInterval(checkUpdates, 5000);
-      
-      // Aggressive update check
+      setInterval(checkUpdates, 10000);
       reg.update();
     })
     .catch(err => {
