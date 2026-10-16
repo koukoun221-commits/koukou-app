@@ -464,7 +464,8 @@ function clean(o){const S2=Object.assign(DEF(),o),n=(v,a,b,f)=>(v=+v,isFinite(v)
 let S=load();
 function load(){const d=DEF();try{let r=localStorage.getItem(KEY),o=null;try{o=JSON.parse(r)}catch(e){try{o=JSON.parse(localStorage.getItem('koukou_bak'))}catch(x){}}if(o&&typeof o=='object')return clean(o)
  const old=localStorage.getItem('koukou_candies_v3');if(old){d.candies=parseInt(old)||42;d.lang=localStorage.getItem('koukou_lang_v3')||'en';d.char=localStorage.getItem('koukou_char_v3')||d.char;}}catch(e){}return d}
-let sv;const saveSoon=()=>{clearTimeout(sv);sv=setTimeout(save,300)};let mem=false;function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){if(!mem){mem=true;toast('⚠️ '+(window.VS?VS('stor'):'Storage blocked'))}}}
+let sv;const saveSoon=()=>{clearTimeout(sv);sv=setTimeout(save,300)};let mem=false;let _lastLocalWrite = 0;
+function save(){try{_lastLocalWrite=Date.now();S._updatedAt=_lastLocalWrite;localStorage.setItem(KEY,JSON.stringify(S))}catch(e){if(!mem){mem=true;toast('⚠️ '+(window.VS?VS('stor'):'Storage blocked'))}}}
 const li=L.indexOf.bind(L),tr=k=>(T[k]||[k])[li(S.lang)]||(T[k]||[k])[0],esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function newDay(){if(S.day===today())return;const y=S.habits.length&&S.habits.every(h=>h.d)&&S.water.n>=S.water.goal;const yd=yday();
  S.streak.n=y&&S.day===yd?S.streak.n+1:0;S.habits.forEach(h=>h.d=false);S.water.n=0;S.water.r=0;S.day=today();save()}
@@ -614,7 +615,7 @@ function renderAll(){mjRender();renderAmb();renderQuests();renderHabits();render
 /* quests */
 function addQuest(e){e.preventDefault();const t=qt.value.trim();if(!t)return sfx('err');S.quests.unshift({id:uid(),t,c:+qc.value,p:+qp.value,d:qd.value,done:false});qt.value='';qd.value='';save();renderQuests();sfx('add')}
 function editQuest(id){const x=S.quests.find(i=>i.id==id);form('✏️',[{k:'t',l:tr('name'),v:x.t},{k:'c',l:tr('cat'),v:x.c,o:T.cats.map(c=>c[li(S.lang)])},{k:'p',l:tr('prio'),v:x.p,o:T.pr.map(c=>c[li(S.lang)])},{k:'d',l:tr('date'),v:x.d,t:'date'}],o=>{Object.assign(x,{t:o.t.trim()||x.t,c:+o.c,p:+o.p,d:o.d});save();renderQuests();toast(tr('saved'));sfx('add')})}
-function togQuest(id,e){const x=S.quests.find(i=>i.id==id);x.done=!x.done;if(x.done){if(!x.paid){x.paid=1;S.st.done++;setCoins(3)}sfx('crystal');burst(e)}else{sfx('tap');save()}renderQuests();badges()}
+function togQuest(id,e){const x=S.quests.find(i=>i.id==id);x.done=!x.done;if(x.done){if(!x.paid){x.paid=1;S.st.done++;setCoins(3)}sfx('crystal');burst(e)}else{sfx('tap')}save();renderQuests();badges()}
 function delQuest(id){const i=S.quests.findIndex(x=>x.id==id),x=S.quests.splice(i,1)[0];save();renderQuests();sfx('trash');toast(tr('del'),tr('undo'),()=>{S.quests.splice(i,0,x);save();renderQuests();sfx('pop')})}
 function renderQuests(){const s=q.value.toLowerCase(),l=S.quests.filter(x=>x.t.toLowerCase().includes(s)&&(flt_=='all'||(flt_=='pending')!=x.done)).sort((a,b)=>(a.done-b.done)||((a.d||'9')<(b.d||'9')?-1:(a.d||'9')>(b.d||'9')?1:0)||(a.p-b.p));
  quests.innerHTML=l.length?l.map(x=>{const od=x.d&&!x.done&&x.d<today();return`<div class="item ${x.done?'d':''}"><button class="chk" onclick="togQuest('${x.id}',event)" aria-pressed="${x.done}" aria-label="done">✔</button><div class="t">${esc(x.t)}<small><span class="${'ume'[x.p]}">${T.pr[x.p][li(S.lang)]}</span>${T.cats[x.c][li(S.lang)]}${x.d?` · 📅 ${esc(x.d)}${od?' ⚠️':''}`:''}</small></div><button class="mini" onclick="editQuest('${x.id}')" aria-label="edit">✏️</button><button class="mini" onclick="delQuest('${x.id}')" aria-label="delete">🗑</button></div>`}).join(''):`<div class="empty">${CH[S.char].e}<br>${tr('empty')}</div>`}
@@ -1822,9 +1823,12 @@ function mark(id){const x=SD().find(z=>z.id==id);if(!x)return;const w=sw(),k=wk(
 /* overlays */
 function ov(id){const e=document.createElement('div');e.id=id;e.hidden=true;e.innerHTML='<div class="card gdc" role="dialog" aria-modal="true"></div>';document.body.appendChild(e);e.onclick=ev=>{if(ev.target===e)cl(e)};return e}
 const cl=e=>{e.hidden=true;document.body.style.overflow=''},op=e=>{e.dir=S.lang=='ar'?'rtl':'ltr';e.hidden=false;document.body.style.overflow='hidden'};
-const M=ov('sdm'),G=ov('sdgf'),H=ov('sdw');addEventListener('keydown',e=>{if(e.key=='Escape')[M,G,H].forEach(x=>{if(!x.hidden)cl(x)})});
+const M=ov('sdm'),G=ov('sdgf'),H=ov('sdw');
+M.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';
+G.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';
+H.firstChild.style.cssText='background:var(--card);color:var(--tx);min-width:min(440px,94vw);padding:20px;border-radius:20px;';addEventListener('keydown',e=>{if(e.key=='Escape')[M,G,H].forEach(x=>{if(!x.hidden)cl(x)})});
 /* add / edit */
-function edit(id){const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',d:today(),k:0,l:1,y:1,x:'',a:'',p:'',r:6,h:0};const c=M.firstChild;
+function edit(id){try{const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',d:today(),k:0,l:1,y:1,x:'',a:'',p:'',r:6,h:0};const c=M.firstChild;c.style.background='var(--card)';c.style.color='var(--tx)';
  const draw=()=>{c.innerHTML=`<h2>${['🎂','💍','📌'][F.k]} ${N(old?W.tb:W.add)}</h2>
  <label for="fn">${N(W.nm)}</label><input class="in" id="fn" maxlength="60" value="${esc(F.n)}" autocomplete="off">
  <label for="fd">${N(W.dt)}</label><input class="in" id="fd" type="date" value="${F.d}">
@@ -1842,7 +1846,7 @@ function edit(id){const old=id?SD().find(z=>z.id==id):null,F=old?{...old}:{n:'',
   $('fc').onclick=()=>cl(M);const dl_=$('fdl');if(dl_)dl_.onclick=()=>{if(confirm(N(W.dc))){S.dt=SD().filter(z=>z.id!=old.id);sv();cl(M);R();try{sfx('trash')}catch(e){}}};
   $('fs').onclick=()=>{keep();const n=F.n.trim().slice(0,60);if(!n){$('fn').focus();try{sfx('err')}catch(e){}return}if(!OK.test(F.d)||isNaN(new Date(F.d+'T00:00:00'))){$('fd').focus();return}
    const rec=san({...F,n,id:old?old.id:uid(),f:''});const a=SD();if(old){const i=a.findIndex(z=>z.id==old.id);if(i>=0)a[i]=rec}else a.push(rec);okS.add(rec);sv();cl(M);R();try{sfx('add');if(!old)burst(null,14)}catch(e){}}};
- draw();op(M);setTimeout(()=>{try{$('fn').focus()}catch(e){}},50)}
+ draw();op(M);setTimeout(()=>{try{$('fn').focus()}catch(e){}},50)}catch(err){console.error('Error opening edit modal:',err);try{toast('⚠️ Modal error')}catch(_){}}}
 /* gifts */
 function gifts(id){const c=G.firstChild;const draw=()=>{const x=SD().find(z=>z.id==id);if(!x){cl(G);return}
  c.innerHTML=`<h2>🎁 ${N(W.gf)} · ${esc(x.n)}</h2><p class="sdmeta">${x.g.filter(z=>z.b).length} / ${x.g.length} ${N(W.gb)}</p><div class="hkl">${x.g.map((g,i)=>`<div class="gfi ${g.b?'b':''}"><input type="checkbox" data-b="${i}" ${g.b?'checked':''} aria-label="bought" style="width:20px;height:20px;accent-color:var(--p)"><span>${esc(g.t)}</span><button type="button" class="mini" data-x="${i}" aria-label="delete">🗑</button></div>`).join('')}</div>
@@ -2755,11 +2759,11 @@ async function writeDoc(docId,text){
 const sigs={};let applying=false,busy=false,again=false,pt=0,status='off',lastErr='';
 const initSigs=()=>{for(const u of unitsOf(S))sigs[u]=sigOf(u,S)};
 function detect(){if(applying||!cfg())return false;if(!Object.keys(sigs).length){initSigs();return false}S._ts=S._ts&&typeof S._ts=='object'?S._ts:{};let d=false;for(const u of unitsOf(S)){const s=sigOf(u,S);if(sigs[u]!==s){sigs[u]=s;S._ts[u]=Date.now();d=true}}return d}
-const _save=window.save;window.save=function(){const d=detect();const r=_save.apply(this,arguments);if(d)schedule();return r};
-const schedule=()=>{clearTimeout(pt);pt=setTimeout(()=>syncNow('change'),4000)};
+const _save=window.save;window._forceCloudPush=function(){schedule(600)};window.save=function(){const d=detect();const r=_save.apply(this,arguments);if(d)schedule();return r};
+const schedule=(delay=4000)=>{clearTimeout(pt);pt=setTimeout(()=>syncNow('change'),delay)};
 const build=()=>{const data={};for(const u of unitsOf(S))for(const k of keysOf(u))if(S[k]!==undefined)data[k]=S[k];return{ts:Object.assign({},S._ts),data}};
 function refreshUI(){try{renderAll()}catch(e){}try{gR()}catch(e){}try{$('cn').textContent=S.candies}catch(e){}try{theme()}catch(e){}try{i18n()}catch(e){}try{window._hrtR&&window._hrtR()}catch(e){}}
-function merge(rm){const rd=rm.data||{},rt=rm.ts||{};S._ts=S._ts||{};S._ls=S._ls||{};const all=new Set([...unitsOf(S),...unitsOf(rd)]);let push=false,applied=0;const units=[];const before=JSON.stringify(S);
+function merge(rm){const rd=rm.data||{},rt=rm.ts||{};S._ts=S._ts||{};S._ls=S._ls||{};if((rm._updatedAt||(rm.ts&&rm.ts._all)||0)<(S._updatedAt||0)&&(Date.now()-_lastLocalWrite<30000)){return{push:true,applied:0,units:[]}}const all=new Set([...unitsOf(S),...unitsOf(rd)]);let push=false,applied=0;const units=[];const before=JSON.stringify(S);
  for(const u of all){const lts=S._ts[u]||0,rts=rt[u]||0,ls=S._ls[u]||0,hasR=u=='core'?CORE.some(k=>k in rd):(u in rd),lv=sigOf(u,S),rv=hasR?sigOf(u,rd):null;
   if(!hasR){if(lv!==sigOf(u,{})){S._ts[u]=lts||Date.now();push=true}continue}
   if(lv===rv){const m=Math.max(lts,rts);S._ts[u]=m;S._ls[u]=m;if(rts<lts)push=true;continue}
@@ -2772,6 +2776,7 @@ let lastConflict=false;
 
 async function syncNow(why){
  const c=cfg();if(!c||!c.pin||!c.doc)return;
+ if(why!=='force'&&why!=='push'&&Date.now()-_lastLocalWrite<8000&&why!=='change'){return}
  if(busy){again=true;return}if(!navigator.onLine){setSt('off');return}
  busy=true;setSt('busy');
  try{
